@@ -9,7 +9,10 @@ def prefetch_film(
     film_id: int,
 ) -> Film:
 
-    film: Film | None = next((film for film in FILM_LIST if film.id == film_id), None)
+    film: Film | None = next(
+        (film for film in FILM_LIST if film.film_id == film_id),
+        None,
+    )
 
     if film:
         return film
