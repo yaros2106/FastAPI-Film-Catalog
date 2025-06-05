@@ -12,7 +12,10 @@ app = FastAPI(
 app.include_router(api_router)
 
 
-@app.get("/")
+@app.get(
+    "/",
+    tags=["Docs"],
+)
 def read_root(
     request: Request,
 ):

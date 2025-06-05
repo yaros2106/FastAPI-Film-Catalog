@@ -1,5 +1,3 @@
-import random
-
 from typing import Annotated
 
 from fastapi import (
@@ -27,10 +25,10 @@ def get_films():
 
 
 @router.get(
-    "/{film_id}",
+    "/{slug}",
     response_model=Film,
 )
-def get_film_by_id(
+def get_film_by_slug(
     film: Annotated[
         Film,
         Depends(prefetch_film),
@@ -47,8 +45,6 @@ def get_film_by_id(
 def create_film(
     film: FilmCreate,
 ):
-    film_id = random.randint(4, 50)
     return Film(
-        film_id=film_id,
         **film.model_dump(),
     )
