@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from starlette import status
 
-from api.api_v1.films.crud import FILM_LIST
+from api.api_v1.films.crud import storage
 from schemas.film import Film
 
 
@@ -9,10 +9,7 @@ def prefetch_film(
     slug: str,
 ) -> Film:
 
-    film: Film | None = next(
-        (film for film in FILM_LIST if film.slug == slug),
-        None,
-    )
+    film: Film | None = storage.get_by_slug(slug=slug)
 
     if film:
         return film

@@ -16,7 +16,7 @@ class FilmCreateBase(BaseModel):
     # noinspection PyTypeHints
     slug: Annotated[
         str,
-        Len(min_length=3, max_length=30),
+        Len(min_length=3, max_length=50),
     ]
     # noinspection PyTypeHints
     title: Annotated[
@@ -26,7 +26,7 @@ class FilmCreateBase(BaseModel):
     # noinspection PyTypeHints
     description: Annotated[
         str,
-        Len(min_length=3, max_length=100),
+        Len(min_length=3, max_length=150),
     ]
     year: Annotated[
         int,
