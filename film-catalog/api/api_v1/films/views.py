@@ -5,6 +5,7 @@ from fastapi import (
     APIRouter,
     status,
 )
+from pip._internal.cli import status_codes
 
 from api.api_v1.films.crud import storage
 from api.api_v1.films.dependencies import prefetch_film
@@ -46,3 +47,28 @@ def create_film(
     film: FilmCreate,
 ) -> Film:
     return storage.create(film)
+
+
+@router.delete(
+    "/{slug}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses={
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Film not found",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Film with slug 'some-slug' not found",
+                    },
+                },
+            },
+        },
+    },
+)
+def delete_film(
+    film: Annotated[
+        Film,
+        Depends(prefetch_film),
+    ],
+) -> None:
+    storage.delete(film=film)
