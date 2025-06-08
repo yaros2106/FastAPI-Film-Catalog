@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 
 class FilmBase(BaseModel):
-    slug: str
     title: str
     description: str
     year: int
@@ -46,7 +45,36 @@ class FilmCreate(FilmCreateBase):
     """
 
 
+class FilmUpdate(FilmBase):
+    """
+    Модель для обновления информации о фильме
+    """
+
+    # noinspection PyTypeHints
+    title: Annotated[
+        str,
+        Len(min_length=3, max_length=25),
+    ]
+    # noinspection PyTypeHints
+    description: Annotated[
+        str,
+        Len(min_length=3, max_length=150),
+    ]
+    year: Annotated[
+        int,
+        Ge(1900),
+        Le(2050),
+    ]
+    duration_minutes: Annotated[
+        int,
+        Ge(5),
+        Le(5000),
+    ]
+
+
 class Film(FilmBase):
     """
     Модель фильма
     """
+
+    slug: str
