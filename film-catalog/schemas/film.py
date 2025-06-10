@@ -69,9 +69,18 @@ class FilmPartialUpdate(FilmBase):
     duration_minutes: DurationMinutesString | None = None
 
 
+class FilmRead(FilmBase):
+    """
+    Модель для чтения данных о фильме
+    """
+
+    slug: str
+
+
 class Film(FilmBase):
     """
     Модель фильма
     """
 
     slug: str
+    notes: str = ""
