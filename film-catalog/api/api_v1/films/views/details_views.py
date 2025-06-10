@@ -11,6 +11,7 @@ from api.api_v1.films.dependencies import prefetch_film
 from schemas.film import (
     Film,
     FilmUpdate,
+    FilmPartialUpdate,
 )
 
 router = APIRouter(
@@ -35,14 +36,14 @@ FilmBySlug = Annotated[
 ]
 
 
-@router.delete(
+@router.get(
     "/",
-    status_code=status.HTTP_204_NO_CONTENT,
+    response_model=Film,
 )
-def delete_film(
+def get_film_by_slug(
     film: FilmBySlug,
-) -> None:
-    storage.delete(film=film)
+) -> Film:
+    return film
 
 
 @router.put(
@@ -59,11 +60,25 @@ def update_film(
     )
 
 
-@router.get(
+@router.patch(
     "/",
     response_model=Film,
 )
-def get_film_by_slug(
+def update_film_partial(
     film: FilmBySlug,
-) -> Film:
-    return film
+    film_in: FilmPartialUpdate,
+):
+    return storage.update_partial(
+        film=film,
+        film_in=film_in,
+    )
+
+
+@router.delete(
+    "/",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+def delete_film(
+    film: FilmBySlug,
+) -> None:
+    storage.delete(film=film)
