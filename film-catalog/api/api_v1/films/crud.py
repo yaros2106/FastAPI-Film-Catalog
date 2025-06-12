@@ -42,13 +42,13 @@ class FilmsStorage(BaseModel):
             **film_crate.model_dump(),
         )
         self.slug_to_film[film.slug] = film
-        log.info("film created")
+        log.info("film created: %s", film.slug)
         self.save_state()
         return film
 
     def delete_by_slug(self, slug: str) -> None:
         self.slug_to_film.pop(slug, None)
-        log.info("film deleted")
+        log.info("film deleted: %s", slug)
         self.save_state()
 
     def delete(self, film: Film) -> None:
@@ -61,7 +61,7 @@ class FilmsStorage(BaseModel):
     ) -> Film:
         for field_name, value in film_in:
             setattr(film, field_name, value)
-        log.info("film updated")
+        log.info("film updated: %s", film.slug)
         self.save_state()
         return film
 
@@ -72,7 +72,7 @@ class FilmsStorage(BaseModel):
     ) -> Film:
         for field_name, value in film_in.model_dump(exclude_unset=True).items():
             setattr(film, field_name, value)
-        log.info("film partial updated")
+        log.info("film partial updated: %s", film.slug)
         self.save_state()
         return film
 
@@ -80,7 +80,7 @@ class FilmsStorage(BaseModel):
 try:
     storage = FilmsStorage().load_state()
     log.warning("film storage loaded")
-except ValidationError:
+except ValidationError as e:
     storage = FilmsStorage()
     storage.save_state()
-    log.warning("Rewritten film storage file due to validation error")
+    log.warning("Rewritten film storage file due to validation error: %s", str(e))
