@@ -1,21 +1,33 @@
+import logging
+
 from pydantic import (
     BaseModel,
     ValidationError,
 )
 
 from core.config import FILM_STORAGE_FILEPATH
-from schemas.film import Film, FilmCreate, FilmUpdate, FilmPartialUpdate
+from schemas.film import (
+    Film,
+    FilmCreate,
+    FilmUpdate,
+    FilmPartialUpdate,
+)
+
+
+log = logging.getLogger(__name__)
 
 
 class FilmsStorage(BaseModel):
     slug_to_film: dict[str, Film] = {}
 
     def save_state(self) -> None:
-        return FILM_STORAGE_FILEPATH.write_text(self.model_dump_json(indent=2))
+        FILM_STORAGE_FILEPATH.write_text(self.model_dump_json(indent=2))
+        log.info("saved state films to storage file")
 
     @classmethod
     def load_state(cls) -> "FilmsStorage":
         if not FILM_STORAGE_FILEPATH.exists():
+            log.info("film storage file doesn't exist")
             return FilmsStorage()
         return cls.model_validate_json(FILM_STORAGE_FILEPATH.read_text())
 
@@ -30,11 +42,13 @@ class FilmsStorage(BaseModel):
             **film_crate.model_dump(),
         )
         self.slug_to_film[film.slug] = film
+        log.info("film created")
         self.save_state()
         return film
 
     def delete_by_slug(self, slug: str) -> None:
         self.slug_to_film.pop(slug, None)
+        log.info("film deleted")
         self.save_state()
 
     def delete(self, film: Film) -> None:
@@ -47,6 +61,7 @@ class FilmsStorage(BaseModel):
     ) -> Film:
         for field_name, value in film_in:
             setattr(film, field_name, value)
+        log.info("film updated")
         self.save_state()
         return film
 
@@ -57,12 +72,15 @@ class FilmsStorage(BaseModel):
     ) -> Film:
         for field_name, value in film_in.model_dump(exclude_unset=True).items():
             setattr(film, field_name, value)
+        log.info("film partial updated")
         self.save_state()
         return film
 
 
 try:
     storage = FilmsStorage().load_state()
+    log.warning("film storage loaded")
 except ValidationError:
     storage = FilmsStorage()
     storage.save_state()
+    log.warning("Rewritten film storage file due to validation error")
