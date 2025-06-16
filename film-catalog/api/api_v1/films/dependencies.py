@@ -3,6 +3,7 @@ import logging
 from fastapi import (
     HTTPException,
     BackgroundTasks,
+    Request,
 )
 from starlette import status
 
@@ -11,6 +12,15 @@ from schemas.film import Film
 
 
 log = logging.getLogger(__name__)
+
+UNSAFE_METHODS = frozenset(
+    {
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE",
+    }
+)
 
 
 def prefetch_film(
@@ -28,9 +38,13 @@ def prefetch_film(
     )
 
 
-def background_save_state(background_tasks: BackgroundTasks):
+def background_save_state(
+    background_tasks: BackgroundTasks,
+    request: Request,
+):
     # сначала выполняется код до входа в view
     yield
     # код после выхода из view
-    log.info("added background task for saving state")
-    background_tasks.add_task(storage.save_state)
+    if request.method in UNSAFE_METHODS:
+        log.info("added background task for saving state")
+        background_tasks.add_task(storage.save_state)
