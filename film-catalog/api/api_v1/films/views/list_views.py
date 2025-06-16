@@ -3,10 +3,11 @@ import logging
 from fastapi import (
     APIRouter,
     status,
-    BackgroundTasks,
+    Depends,
 )
 
 from api.api_v1.films.crud import storage
+from api.api_v1.films.dependencies import background_save_state
 from schemas.film import (
     Film,
     FilmCreate,
@@ -17,8 +18,7 @@ from schemas.film import (
 log = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/films",
-    tags=["Films"],
+    prefix="/films", tags=["Films"], dependencies=[Depends(background_save_state)]
 )
 
 
@@ -37,8 +37,5 @@ def get_films() -> list[Film]:
 )
 def create_film(
     film: FilmCreate,
-    background_tasks: BackgroundTasks,
 ) -> Film:
-    background_tasks.add_task(storage.save_state)
-    log.info("added background task for saving state")
     return storage.create(film)

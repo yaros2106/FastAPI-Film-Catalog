@@ -5,7 +5,6 @@ from fastapi import (
     Depends,
     APIRouter,
     status,
-    BackgroundTasks,
 )
 
 from api.api_v1.films.crud import storage
@@ -59,9 +58,7 @@ def get_film_by_slug(
 def update_film(
     film: FilmBySlug,
     film_in: FilmUpdate,
-    background_tasks: BackgroundTasks,
 ):
-    background_tasks.add_task(storage.save_state)
     log.info("added background task for saving state")
     return storage.update(
         film=film,
@@ -76,9 +73,7 @@ def update_film(
 def update_film_partial(
     film: FilmBySlug,
     film_in: FilmPartialUpdate,
-    background_tasks: BackgroundTasks,
 ):
-    background_tasks.add_task(storage.save_state)
     log.info("added background task for saving state")
     return storage.update_partial(
         film=film,
@@ -92,8 +87,5 @@ def update_film_partial(
 )
 def delete_film(
     film: FilmBySlug,
-    background_tasks: BackgroundTasks,
 ) -> None:
     storage.delete(film=film)
-    background_tasks.add_task(storage.save_state)
-    log.info("added background task for saving state")
