@@ -33,7 +33,7 @@ router = APIRouter(
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "API token 'some-token' is invalid",
+                        "detail": "Invalid API token",
                     },
                 },
             },
