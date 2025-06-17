@@ -7,7 +7,10 @@ from fastapi import (
 )
 
 from api.api_v1.films.crud import storage
-from api.api_v1.films.dependencies import background_save_state
+from api.api_v1.films.dependencies import (
+    background_save_state,
+    required_api_token_for_unsafe_methods,
+)
 from schemas.film import (
     Film,
     FilmCreate,
@@ -18,7 +21,24 @@ from schemas.film import (
 log = logging.getLogger(__name__)
 
 router = APIRouter(
-    prefix="/films", tags=["Films"], dependencies=[Depends(background_save_state)]
+    prefix="/films",
+    tags=["Films"],
+    dependencies=[
+        Depends(background_save_state),
+        Depends(required_api_token_for_unsafe_methods),
+    ],
+    responses={
+        status.HTTP_401_UNAUTHORIZED: {
+            "description": "Unauthenticated. Only for unsafe methods.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "API token 'some-token' is invalid",
+                    },
+                },
+            },
+        },
+    },
 )
 
 
