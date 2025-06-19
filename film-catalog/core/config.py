@@ -18,3 +18,9 @@ API_TOKENS: frozenset[str] = frozenset(
         "Z7xf0nvDFyG2EX11q_85Gw",
     }
 )
+
+USER_DB: dict[str, str] = {
+    # username: password
+    "yaros": "password",
+    "sam": "qwerty",
+}

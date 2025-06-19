@@ -10,6 +10,7 @@ from api.api_v1.films.crud import storage
 from api.api_v1.films.dependencies import (
     background_save_state,
     required_api_token_for_unsafe_methods,
+    user_basic_auth_required_for_unsafe_methods,
 )
 from schemas.film import (
     Film,
@@ -25,7 +26,8 @@ router = APIRouter(
     tags=["Films"],
     dependencies=[
         Depends(background_save_state),
-        Depends(required_api_token_for_unsafe_methods),
+        # Depends(required_api_token_for_unsafe_methods),
+        Depends(user_basic_auth_required_for_unsafe_methods),
     ],
     responses={
         status.HTTP_401_UNAUTHORIZED: {
@@ -33,7 +35,7 @@ router = APIRouter(
             "content": {
                 "application/json": {
                     "example": {
-                        "detail": "Invalid API token",
+                        "detail": "Invalid username or password",
                     },
                 },
             },
