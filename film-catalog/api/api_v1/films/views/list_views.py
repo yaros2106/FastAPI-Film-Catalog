@@ -11,6 +11,7 @@ from api.api_v1.films.dependencies import (
     background_save_state,
     required_api_token_for_unsafe_methods,
     user_basic_auth_required_for_unsafe_methods,
+    api_token_or_user_basic_auth_required_for_unsafe_methods,
 )
 from schemas.film import (
     Film,
@@ -27,7 +28,7 @@ router = APIRouter(
     dependencies=[
         Depends(background_save_state),
         # Depends(required_api_token_for_unsafe_methods),
-        Depends(user_basic_auth_required_for_unsafe_methods),
+        Depends(api_token_or_user_basic_auth_required_for_unsafe_methods),
     ],
     responses={
         status.HTTP_401_UNAUTHORIZED: {
