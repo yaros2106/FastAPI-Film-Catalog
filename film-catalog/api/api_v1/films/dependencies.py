@@ -83,6 +83,13 @@ def required_api_token_for_unsafe_methods(
 ):
     if request.method not in UNSAFE_METHODS:
         return
+
+    if not api_token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="API token is required",
+        )
+
     validate_api_token(api_token=api_token)
 
 
