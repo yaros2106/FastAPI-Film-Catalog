@@ -18,7 +18,6 @@ from fastapi.security import (
 from api.api_v1.films.crud import storage
 from core.config import (
     USER_DB,
-    REDIS_TOKENS_SET_NAME,
 )
 from schemas.film import Film
 from .redis import redis_tokens
@@ -98,10 +97,7 @@ def validate_api_token(
     api_token: HTTPAuthorizationCredentials,
 ):
 
-    if redis_tokens.sismember(
-        REDIS_TOKENS_SET_NAME,
-        api_token.credentials,
-    ):
+    if redis_tokens.token_exists(token=api_token.credentials):
         return
 
     raise HTTPException(
