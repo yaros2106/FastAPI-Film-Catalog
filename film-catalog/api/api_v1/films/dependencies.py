@@ -20,8 +20,7 @@ from core.config import (
     USER_DB,
 )
 from schemas.film import Film
-from .redis import redis_tokens
-
+from api.api_v1.auth.services import redis_tokens
 
 log = logging.getLogger(__name__)
 
