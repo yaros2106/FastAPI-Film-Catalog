@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class AbstractTokenHelper(ABC):
+class AbstractUserHelper(ABC):
     """
     - получить пароль по username
     - сравнить этот пароль с паролем в БД
@@ -38,7 +38,7 @@ class AbstractTokenHelper(ABC):
     ) -> bool:
         """
         Проверяет, валиден ли пароль
-        :param username: - чей пароль проверить
+        :param username: - чей пароль проверить`
         :param password: - переданный пароль, проверить с тем, что в БД
         :return: True если совпадает, иначе False
         """

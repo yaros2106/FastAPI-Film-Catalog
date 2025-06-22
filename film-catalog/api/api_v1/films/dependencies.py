@@ -16,11 +16,11 @@ from fastapi.security import (
 )
 
 from api.api_v1.films.crud import storage
-from core.config import (
-    USER_DB,
-)
 from schemas.film import Film
-from api.api_v1.auth.services import redis_tokens
+from api.api_v1.auth.services import (
+    redis_tokens,
+    redis_users,
+)
 
 log = logging.getLogger(__name__)
 
@@ -121,10 +121,9 @@ def validate_basic_auth(
     credentials: HTTPBasicCredentials | None,
 ):
     log.info("user credentials: %s", credentials)
-    if (
-        credentials
-        and credentials.username in USER_DB
-        and credentials.password == USER_DB[credentials.username]
+    if credentials and redis_users.validate_user_password(
+        credentials.username,
+        credentials.password,
     ):
         log.info("user is authenticated: %s", credentials.username)
         return
