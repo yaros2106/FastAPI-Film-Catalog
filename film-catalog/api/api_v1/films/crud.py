@@ -58,7 +58,8 @@ class FilmsStorage(BaseModel):
         log.warning("film storage loaded")
 
     def get(self) -> list[Film]:
-        return list(self.slug_to_film.values())
+        data = redis.hvals(name=config.REDIS_FILMS_HASH_NAME)
+        return [Film.model_validate_json(film) for film in data]
 
     def get_by_slug(self, slug: str) -> Film | None:
         data = redis.hget(
