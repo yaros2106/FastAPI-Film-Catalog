@@ -122,8 +122,8 @@ def validate_basic_auth(
 ):
     log.info("user credentials: %s", credentials)
     if credentials and redis_users.validate_user_password(
-        credentials.username,
-        credentials.password,
+        username=credentials.username,
+        password=credentials.password,
     ):
         log.info("user is authenticated: %s", credentials.username)
         return
