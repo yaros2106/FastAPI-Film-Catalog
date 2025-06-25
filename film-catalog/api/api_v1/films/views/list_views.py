@@ -4,6 +4,7 @@ from fastapi import (
     APIRouter,
     status,
     Depends,
+    HTTPException,
 )
 
 from api.api_v1.films.crud import storage
@@ -55,8 +56,25 @@ def get_films() -> list[Film]:
     "/",
     response_model=FilmRead,
     status_code=status.HTTP_201_CREATED,
+    responses={
+        status.HTTP_409_CONFLICT: {
+            "description": "Film with such slug already exists.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Film with slug='some-slug' already exists.",
+                    }
+                }
+            },
+        },
+    },
 )
 def create_film(
     film: FilmCreate,
 ) -> Film:
-    return storage.create(film)
+    if not storage.get_by_slug(film.slug):
+        return storage.create(film)
+    raise HTTPException(
+        status_code=status.HTTP_409_CONFLICT,
+        detail=f"Film with slug={film.slug!r} already exists",
+    )
