@@ -57,6 +57,13 @@ class FilmsStorage(BaseModel):
         )
         log.warning("film storage loaded")
 
+    def save_film_data(self, film: Film) -> None:
+        redis.hset(
+            name=config.REDIS_FILMS_HASH_NAME,
+            key=film.slug,
+            value=film.model_dump_json(),
+        )
+
     def get(self) -> list[Film]:
         data = redis.hvals(name=config.REDIS_FILMS_HASH_NAME)
         return [Film.model_validate_json(film) for film in data]
@@ -73,11 +80,7 @@ class FilmsStorage(BaseModel):
         film = Film(
             **film_crate.model_dump(),
         )
-        redis.hset(
-            name=config.REDIS_FILMS_HASH_NAME,
-            key=film.slug,
-            value=film.model_dump_json(),
-        )
+        self.save_film_data(film)
         log.info("film created: %s", film.slug)
         return film
 
@@ -95,6 +98,7 @@ class FilmsStorage(BaseModel):
     ) -> Film:
         for field_name, value in film_in:
             setattr(film, field_name, value)
+        self.save_film_data(film)
         log.info("film updated: %s", film.slug)
         return film
 
@@ -105,6 +109,7 @@ class FilmsStorage(BaseModel):
     ) -> Film:
         for field_name, value in film_in.model_dump(exclude_unset=True).items():
             setattr(film, field_name, value)
+        self.save_film_data(film)
         log.info("film partial updated: %s", film.slug)
         return film
 
