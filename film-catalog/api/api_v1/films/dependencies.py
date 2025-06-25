@@ -61,18 +61,6 @@ def prefetch_film(
     )
 
 
-def background_save_state(
-    background_tasks: BackgroundTasks,
-    request: Request,
-):
-    # сначала выполняется код до входа в view
-    yield
-    # код после выхода из view
-    if request.method in UNSAFE_METHODS:
-        log.info("added background task for saving state")
-        background_tasks.add_task(storage.save_state)
-
-
 def required_api_token_for_unsafe_methods(
     request: Request,
     api_token: Annotated[

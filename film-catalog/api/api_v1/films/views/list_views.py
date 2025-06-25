@@ -8,7 +8,6 @@ from fastapi import (
 
 from api.api_v1.films.crud import storage
 from api.api_v1.films.dependencies import (
-    background_save_state,
     required_api_token_for_unsafe_methods,
     user_basic_auth_required_for_unsafe_methods,
     api_token_or_user_basic_auth_required_for_unsafe_methods,
@@ -26,7 +25,6 @@ router = APIRouter(
     prefix="/films",
     tags=["Films"],
     dependencies=[
-        Depends(background_save_state),
         # Depends(required_api_token_for_unsafe_methods),
         Depends(api_token_or_user_basic_auth_required_for_unsafe_methods),
     ],

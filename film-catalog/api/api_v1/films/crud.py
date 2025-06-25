@@ -27,35 +27,6 @@ redis = Redis(
 
 
 class FilmsStorage(BaseModel):
-    slug_to_film: dict[str, Film] = {}
-
-    def save_state(self) -> None:
-        FILM_STORAGE_FILEPATH.write_text(self.model_dump_json(indent=2))
-        log.info("saved state films to storage file")
-
-    @classmethod
-    def load_state(cls) -> "FilmsStorage":
-        if not FILM_STORAGE_FILEPATH.exists():
-            log.info("film storage file doesn't exist")
-            return FilmsStorage()
-        return cls.model_validate_json(FILM_STORAGE_FILEPATH.read_text())
-
-    def init_storage_from_state(self) -> None:
-        try:
-            data = FilmsStorage.load_state()
-        except ValidationError as e:
-            self.save_state()
-            log.warning(
-                "Rewritten film storage file due to validation error: %s", str(e)
-            )
-            return
-
-        # если будут новые свойства,
-        # то их тоже придется обновить напрямую
-        self.slug_to_film.update(
-            data.slug_to_film,
-        )
-        log.warning("film storage loaded")
 
     def save_film_data(self, film: Film) -> None:
         redis.hset(
