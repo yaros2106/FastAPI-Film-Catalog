@@ -26,6 +26,18 @@ redis = Redis(
 )
 
 
+class FilmBaseError(Exception):
+    """
+    Base exception class for film related errors.
+    """
+
+
+class FilmAlreadyExistsError(FilmBaseError):
+    """
+    Raised when a film on creation already exists.
+    """
+
+
 class FilmsStorage(BaseModel):
 
     def save_film_data(self, film: Film) -> None:
@@ -47,6 +59,12 @@ class FilmsStorage(BaseModel):
         if data:
             return Film.model_validate_json(data)
 
+    def exists(self, slug: str) -> bool:
+        return redis.hexists(
+            name=config.REDIS_FILMS_HASH_NAME,
+            key=slug,
+        )
+
     def create(self, film_crate: FilmCreate) -> Film:
         film = Film(
             **film_crate.model_dump(),
@@ -54,6 +72,11 @@ class FilmsStorage(BaseModel):
         self.save_film_data(film)
         log.info("film created: %s", film.slug)
         return film
+
+    def create_or_raise_of_exists(self, film_in: FilmCreate) -> Film:
+        if not self.exists(film_in.slug):
+            return self.create(film_in)
+        raise FilmAlreadyExistsError(film_in.slug)
 
     def delete_by_slug(self, slug: str) -> None:
         redis.hdel(

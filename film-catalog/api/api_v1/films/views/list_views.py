@@ -7,7 +7,7 @@ from fastapi import (
     HTTPException,
 )
 
-from api.api_v1.films.crud import storage
+from api.api_v1.films.crud import storage, FilmAlreadyExistsError
 from api.api_v1.films.dependencies import (
     required_api_token_for_unsafe_methods,
     user_basic_auth_required_for_unsafe_methods,
@@ -72,9 +72,10 @@ def get_films() -> list[Film]:
 def create_film(
     film: FilmCreate,
 ) -> Film:
-    if not storage.get_by_slug(film.slug):
-        return storage.create(film)
-    raise HTTPException(
-        status_code=status.HTTP_409_CONFLICT,
-        detail=f"Film with slug={film.slug!r} already exists",
-    )
+    try:
+        return storage.create_or_raise_of_exists(film)
+    except FilmAlreadyExistsError:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Film with slug={film.slug!r} already exists",
+        )
