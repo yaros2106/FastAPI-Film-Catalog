@@ -58,7 +58,7 @@ class FilmUpdate(FilmBase):
     duration_minutes: DurationMinutesString
 
 
-class FilmPartialUpdate(FilmBase):
+class FilmPartialUpdate(BaseModel):
     """
     Модель для частичного обновления информации о фильме
     """
@@ -83,4 +83,4 @@ class Film(FilmBase):
     """
 
     slug: str
-    notes: str = ""
+    notes: str = "some notes"

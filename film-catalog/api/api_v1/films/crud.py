@@ -58,6 +58,7 @@ class FilmsStorage(BaseModel):
         )
         if data:
             return Film.model_validate_json(data)
+        return None
 
     def exists(self, slug: str) -> bool:
         return redis.hexists(
