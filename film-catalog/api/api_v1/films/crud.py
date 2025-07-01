@@ -61,9 +61,11 @@ class FilmsStorage(BaseModel):
         return None
 
     def exists(self, slug: str) -> bool:
-        return redis.hexists(
-            name=config.REDIS_FILMS_HASH_NAME,
-            key=slug,
+        return bool(
+            redis.hexists(
+                name=config.REDIS_FILMS_HASH_NAME,
+                key=slug,
+            )
         )
 
     def create(self, film_crate: FilmCreate) -> Film:

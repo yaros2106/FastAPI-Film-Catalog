@@ -58,7 +58,7 @@ def get_film_by_slug(
 def update_film(
     film: FilmBySlug,
     film_in: FilmUpdate,
-):
+) -> Film:
     log.info("added background task for saving state")
     return storage.update(
         film=film,
@@ -73,7 +73,7 @@ def update_film(
 def update_film_partial(
     film: FilmBySlug,
     film_in: FilmPartialUpdate,
-):
+) -> Film:
     log.info("added background task for saving state")
     return storage.update_partial(
         film=film,
