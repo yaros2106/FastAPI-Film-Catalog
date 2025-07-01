@@ -2,20 +2,19 @@ import logging
 from typing import Annotated
 
 from fastapi import (
-    Depends,
     APIRouter,
+    Depends,
     status,
+)
+from schemas.film import (
+    Film,
+    FilmPartialUpdate,
+    FilmRead,
+    FilmUpdate,
 )
 
 from api.api_v1.films.crud import storage
 from api.api_v1.films.dependencies import prefetch_film
-from schemas.film import (
-    Film,
-    FilmUpdate,
-    FilmPartialUpdate,
-    FilmRead,
-)
-
 
 log = logging.getLogger(__name__)
 

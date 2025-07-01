@@ -1,13 +1,10 @@
-import typer
-
-from rich import print
 from typing import Annotated
 
-from rich.panel import Panel
-from rich.console import Console
-
+import typer
 from api.api_v1.auth.services import redis_tokens as tokens
-
+from rich import print
+from rich.console import Console
+from rich.panel import Panel
 
 app = typer.Typer(
     name="tokens",
@@ -31,7 +28,7 @@ def check(
         (
             "[bold green]exists[/bold green]"
             if tokens.token_exists(token)
-            else f"[bold red]doesn't exist[/bold red]"
+            else "[bold red]doesn't exist[/bold red]"
         ),
     )
 

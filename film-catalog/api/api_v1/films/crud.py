@@ -1,20 +1,18 @@
+__all__ = ("storage",)
+
 import logging
 
+from core import config
 from pydantic import (
     BaseModel,
-    ValidationError,
 )
 from redis import Redis
-
-from core import config
-from core.config import FILM_STORAGE_FILEPATH
 from schemas.film import (
     Film,
     FilmCreate,
-    FilmUpdate,
     FilmPartialUpdate,
+    FilmUpdate,
 )
-
 
 log = logging.getLogger(__name__)
 

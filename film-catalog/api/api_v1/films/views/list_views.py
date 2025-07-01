@@ -2,16 +2,9 @@ import logging
 
 from fastapi import (
     APIRouter,
-    status,
     Depends,
     HTTPException,
-)
-
-from api.api_v1.films.crud import storage, FilmAlreadyExistsError
-from api.api_v1.films.dependencies import (
-    required_api_token_for_unsafe_methods,
-    user_basic_auth_required_for_unsafe_methods,
-    api_token_or_user_basic_auth_required_for_unsafe_methods,
+    status,
 )
 from schemas.film import (
     Film,
@@ -19,6 +12,10 @@ from schemas.film import (
     FilmRead,
 )
 
+from api.api_v1.films.crud import storage
+from api.api_v1.films.dependencies import (
+    api_token_or_user_basic_auth_required_for_unsafe_methods,
+)
 
 log = logging.getLogger(__name__)
 
@@ -74,7 +71,7 @@ def create_film(
 ) -> Film:
     try:
         return storage.create_or_raise_of_exists(film)
-    except FilmAlreadyExistsError:
+    except storage.FilmAlreadyExistsError:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail=f"Film with slug={film.slug!r} already exists",

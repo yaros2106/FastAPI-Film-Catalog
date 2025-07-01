@@ -1,9 +1,9 @@
 from typing import cast
 
+from core import config
 from redis import Redis
 
 from api.api_v1.auth.services.user_helper import AbstractUserHelper
-from core import config
 
 
 class RedisUserHelper(AbstractUserHelper):
