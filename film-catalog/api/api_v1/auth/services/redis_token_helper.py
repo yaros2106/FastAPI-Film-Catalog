@@ -13,7 +13,7 @@ class RedisTokenHelper(AbstractTokenHelper):
         port: int,
         db: int,
         token_set_name: str,
-    ):
+    ) -> None:
         self.redis = Redis(
             host=host,
             port=port,

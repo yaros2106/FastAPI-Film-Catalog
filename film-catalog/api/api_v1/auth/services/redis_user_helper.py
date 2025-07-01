@@ -13,7 +13,7 @@ class RedisUserHelper(AbstractUserHelper):
         host: str,
         port: int,
         db: int,
-    ):
+    ) -> None:
         self.redis = Redis(
             host=host,
             port=port,
