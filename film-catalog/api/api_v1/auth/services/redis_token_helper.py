@@ -1,8 +1,8 @@
-from core import config
-from core.config import REDIS_TOKENS_SET_NAME
 from redis import Redis
 
 from api.api_v1.auth.services.token_helper import AbstractTokenHelper
+from core import config
+from core.config import REDIS_TOKENS_SET_NAME
 
 
 class RedisTokenHelper(AbstractTokenHelper):
@@ -27,7 +27,7 @@ class RedisTokenHelper(AbstractTokenHelper):
             self.redis.sismember(
                 self.token_set_name,
                 token,
-            )
+            ),
         )
 
     def add_token(self, token: str) -> None:

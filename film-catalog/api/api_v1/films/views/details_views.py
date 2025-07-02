@@ -6,15 +6,15 @@ from fastapi import (
     Depends,
     status,
 )
+
+from api.api_v1.films.crud import storage
+from api.api_v1.films.dependencies import prefetch_film
 from schemas.film import (
     Film,
     FilmPartialUpdate,
     FilmRead,
     FilmUpdate,
 )
-
-from api.api_v1.films.crud import storage
-from api.api_v1.films.dependencies import prefetch_film
 
 log = logging.getLogger(__name__)
 

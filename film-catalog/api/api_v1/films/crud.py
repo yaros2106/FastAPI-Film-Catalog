@@ -1,12 +1,16 @@
-__all__ = ("storage",)
+__all__ = (
+    "FilmAlreadyExistsError",
+    "storage",
+)
 
 import logging
 
-from core import config
 from pydantic import (
     BaseModel,
 )
 from redis import Redis
+
+from core import config
 from schemas.film import (
     Film,
     FilmCreate,
@@ -63,7 +67,7 @@ class FilmsStorage(BaseModel):
             redis.hexists(
                 name=config.REDIS_FILMS_HASH_NAME,
                 key=slug,
-            )
+            ),
         )
 
     def create(self, film_crate: FilmCreate) -> Film:

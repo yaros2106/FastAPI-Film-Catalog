@@ -1,5 +1,6 @@
-from core import config
 from redis import Redis
+
+from core import config
 
 redis = Redis(
     host=config.REDIS_HOST,
@@ -25,7 +26,7 @@ def main() -> None:
             redis.get("temp"),
             redis.get("abc"),
             redis.get("aaa"),
-        ]
+        ],
     )
     redis.delete("temp")
     print(redis.keys("*"))
