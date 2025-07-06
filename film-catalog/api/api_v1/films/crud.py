@@ -70,9 +70,9 @@ class FilmsStorage(BaseModel):
             ),
         )
 
-    def create(self, film_crate: FilmCreate) -> Film:
+    def create(self, film_create: FilmCreate) -> Film:
         film = Film(
-            **film_crate.model_dump(),
+            **film_create.model_dump(),
         )
         self.save_film_data(film)
         log.info("film created: %s", film.slug)

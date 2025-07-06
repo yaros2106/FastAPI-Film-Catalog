@@ -24,6 +24,52 @@ class FilmCreateTestCase(TestCase):
         self.assertEqual(film_in.year, film.year)
         self.assertEqual(film_in.duration_minutes, film.duration_minutes)
 
+    def test_film_created_accepts_various_data(self) -> None:
+        slug_display_limit = 10
+        data: list[dict[str, str | int]] = [
+            {
+                "slug": "some-slug",
+                "title": "some-title",
+                "description": "some-description",
+                "year": 2020,
+                "duration_minutes": 100,
+            },
+            {
+                # min limit value
+                "slug": "slu",
+                "title": "tit",
+                "description": "des",
+                "year": 1900,
+                "duration_minutes": 5,
+            },
+            {
+                # max limit value
+                "slug": "s" * 50,
+                "title": "t" * 25,
+                "description": "d" * 150,
+                "year": 2050,
+                "duration_minutes": 5000,
+            },
+        ]
+
+        for item in data:
+            slug_value = str(item["slug"])
+            slug_short = (
+                slug_value[:slug_display_limit] + "..."
+                if len(slug_value) > slug_display_limit
+                else slug_value
+            )
+            with self.subTest(
+                slug=slug_short,
+                msg=f"test film: {slug_short}",
+            ):
+                film = FilmCreate(**item)
+                self.assertEqual(item["slug"], film.slug)
+                self.assertEqual(item["title"], film.title)
+                self.assertEqual(item["description"], film.description)
+                self.assertEqual(item["year"], film.year)
+                self.assertEqual(item["duration_minutes"], film.duration_minutes)
+
 
 class FilmUpdateTestCase(TestCase):
     def test_film_can_be_updated_from_update_schema(self) -> None:
@@ -36,7 +82,7 @@ class FilmUpdateTestCase(TestCase):
         film = Film(
             slug="some-slug",
             title="must_be_replaced_title",
-            description="some-must_be_replaced_description",
+            description="must_be_replaced_description",
             year=2000,
             duration_minutes=100,
         )
