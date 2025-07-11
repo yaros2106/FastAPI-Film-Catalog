@@ -1,10 +1,7 @@
 import random
 import string
-from os import getenv
 from typing import ClassVar
 from unittest import TestCase
-
-import pytest
 
 from api.api_v1.films.crud import storage
 from schemas.film import (
@@ -13,9 +10,6 @@ from schemas.film import (
     FilmPartialUpdate,
     FilmUpdate,
 )
-
-if getenv("TESTING") != "1":
-    pytest.exit("Environment is not ready for testing")
 
 
 def create_film() -> Film:
