@@ -1,6 +1,3 @@
-import random
-import string
-from collections.abc import Generator
 from typing import ClassVar
 from unittest import TestCase
 
@@ -16,29 +13,7 @@ from schemas.film import (
     FilmPartialUpdate,
     FilmUpdate,
 )
-
-
-def create_film() -> Film:
-    film = FilmCreate(
-        slug="".join(
-            random.choices(
-                string.ascii_letters,
-                k=8,
-            ),
-        ),
-        title="title",
-        description="description",
-        year=2000,
-        duration_minutes=100,
-    )
-    return storage.create(film)
-
-
-@pytest.fixture()
-def existing_film() -> Generator[Film]:
-    existing_film = create_film()
-    yield existing_film
-    storage.delete(existing_film)
+from testing.conftest import create_film
 
 
 class FilmsStorageUpdateTestCase(TestCase):
