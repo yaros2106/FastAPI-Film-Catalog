@@ -13,12 +13,12 @@ from schemas.film import (
     FilmPartialUpdate,
     FilmUpdate,
 )
-from testing.conftest import create_film
+from testing.conftest import create_film_random_slug
 
 
 class FilmsStorageUpdateTestCase(TestCase):
     def setUp(self) -> None:
-        self.film = create_film()
+        self.film = create_film_random_slug()
 
     def tearDown(self) -> None:
         storage.delete(self.film)
@@ -67,7 +67,7 @@ class FilmsStorageGetFilmTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.films = [create_film() for _ in range(cls.FILMS_COUNT)]
+        cls.films = [create_film_random_slug() for _ in range(cls.FILMS_COUNT)]
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -95,8 +95,8 @@ class FilmsStorageGetFilmTestCase(TestCase):
                 )
 
 
-def test_create_or_raise_of_exists(existing_film: Film) -> None:
-    film_create = FilmCreate(**existing_film.model_dump())
+def test_create_or_raise_of_exists(film: Film) -> None:
+    film_create = FilmCreate(**film.model_dump())
     with pytest.raises(
         FilmAlreadyExistsError,
         match=film_create.slug,
