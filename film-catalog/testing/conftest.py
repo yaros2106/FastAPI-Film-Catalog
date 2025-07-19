@@ -15,10 +15,11 @@ if getenv("TESTING") != "1":
 def build_film_create(
     slug: str,
     description: str = "some description",
+    title: str = "some title",
 ) -> FilmCreate:
     return FilmCreate(
         slug=slug,
-        title="title",
+        title=title,
         description=description,
         year=2000,
         duration_minutes=100,
@@ -27,6 +28,7 @@ def build_film_create(
 
 def build_film_create_random_slug(
     description: str = "some description",
+    title: str = "some title",
 ) -> FilmCreate:
     return build_film_create(
         slug="".join(
@@ -36,24 +38,31 @@ def build_film_create_random_slug(
             ),
         ),
         description=description,
+        title=title,
     )
 
 
 def create_film(
     slug: str,
     description: str = "some description",
+    title: str = "some title",
 ) -> Film:
     film = build_film_create(
         slug=slug,
         description=description,
+        title=title,
     )
     return storage.create(film)
 
 
 def create_film_random_slug(
     description: str = "some description",
+    title: str = "some title",
 ) -> Film:
-    film = build_film_create_random_slug(description=description)
+    film = build_film_create_random_slug(
+        description=description,
+        title=title,
+    )
     return storage.create(film)
 
 
