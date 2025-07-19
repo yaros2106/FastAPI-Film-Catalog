@@ -12,17 +12,22 @@ if getenv("TESTING") != "1":
     pytest.exit("Environment is not ready for testing")
 
 
-def build_film_create(slug: str) -> FilmCreate:
+def build_film_create(
+    slug: str,
+    description: str = "some description",
+) -> FilmCreate:
     return FilmCreate(
         slug=slug,
         title="title",
-        description="description",
+        description=description,
         year=2000,
         duration_minutes=100,
     )
 
 
-def build_film_create_random_slug() -> FilmCreate:
+def build_film_create_random_slug(
+    description: str = "some description",
+) -> FilmCreate:
     return build_film_create(
         slug="".join(
             random.choices(
@@ -30,16 +35,25 @@ def build_film_create_random_slug() -> FilmCreate:
                 k=8,
             ),
         ),
+        description=description,
     )
 
 
-def create_film(slug: str) -> Film:
-    film = build_film_create(slug)
+def create_film(
+    slug: str,
+    description: str = "some description",
+) -> Film:
+    film = build_film_create(
+        slug=slug,
+        description=description,
+    )
     return storage.create(film)
 
 
-def create_film_random_slug() -> Film:
-    film = build_film_create_random_slug()
+def create_film_random_slug(
+    description: str = "some description",
+) -> Film:
+    film = build_film_create_random_slug(description=description)
     return storage.create(film)
 
 
