@@ -38,7 +38,7 @@ class TestUpdate:
             ),
             pytest.param(
                 ("the description", "the title"),
-                "some description",
+                "the description",
                 "new title",
                 id="same-description-and-new-title",
             ),
