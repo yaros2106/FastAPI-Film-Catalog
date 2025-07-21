@@ -11,6 +11,7 @@ from schemas.film import Film
 from testing.conftest import create_film_random_slug
 
 
+@pytest.mark.apitest
 class TestUpdatePartial:
     DESCRIPTION_MAX_LENGTH = 150
     DESCRIPTION_MIN_LENGTH = 3

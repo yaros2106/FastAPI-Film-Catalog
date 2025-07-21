@@ -7,6 +7,8 @@ from main import app
 from schemas.film import Film, FilmCreate
 from testing.conftest import build_film_create_random_slug
 
+pytestmark = pytest.mark.apitest
+
 
 def test_create_film(auth_client: TestClient) -> None:
     url = app.url_path_for("create_film")
