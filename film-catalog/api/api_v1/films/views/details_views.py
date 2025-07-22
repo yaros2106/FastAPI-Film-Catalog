@@ -88,3 +88,10 @@ def delete_film(
     film: FilmBySlug,
 ) -> None:
     storage.delete(film=film)
+
+
+@router.post(
+    "/transfer/",
+)
+def transfer_film() -> None:
+    raise NotImplementedError
