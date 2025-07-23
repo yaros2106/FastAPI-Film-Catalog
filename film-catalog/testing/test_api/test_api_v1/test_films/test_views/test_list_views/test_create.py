@@ -1,3 +1,5 @@
+import logging
+
 import pytest
 from _pytest.fixtures import SubRequest
 from fastapi.testclient import TestClient
@@ -10,7 +12,11 @@ from testing.conftest import build_film_create_random_slug
 pytestmark = pytest.mark.apitest
 
 
-def test_create_film(auth_client: TestClient) -> None:
+def test_create_film(
+    caplog: pytest.LogCaptureFixture,
+    auth_client: TestClient,
+) -> None:
+    caplog.set_level(logging.INFO)
     url = app.url_path_for("create_film")
     film_in = build_film_create_random_slug()
     data: dict[str, str] = film_in.model_dump()
@@ -19,6 +25,8 @@ def test_create_film(auth_client: TestClient) -> None:
     response_data = response.json()
     received_values = FilmCreate(**response_data)
     assert received_values == film_in, response_data
+    assert "film created" in caplog.text, caplog.text
+    assert film_in.slug in caplog.text, caplog.text
 
 
 def test_create_movie_already_exists(

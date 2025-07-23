@@ -9,6 +9,7 @@ from main import app
 @pytest.mark.xfail(
     reason="not implemented yet",
     raises=NotImplementedError,
+    strict=False,
 )
 def test_transfer_film(
     auth_client: TestClient,

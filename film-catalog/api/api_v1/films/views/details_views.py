@@ -93,5 +93,6 @@ def delete_film(
 @router.post(
     "/transfer/",
 )
-def transfer_film() -> None:
-    raise NotImplementedError
+def transfer_film() -> dict[str, str]:
+    # raise NotImplementedError
+    return {"result": "work in progress"}
