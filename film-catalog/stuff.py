@@ -15,7 +15,7 @@ def main() -> None:
     print(redis.ping())
     redis.set("name", "yaros")
     redis.set("temp", "qwerty")
-    redis.set("abc", "aaa")
+    redis.set("abb", "aaa")
     redis.set("num", "40")
 
     print("name:", redis.get("name"))
@@ -25,7 +25,7 @@ def main() -> None:
         [
             redis.get("name"),
             redis.get("temp"),
-            redis.get("abc"),
+            redis.get("abb"),
             redis.get("aaa"),
         ],
     )
