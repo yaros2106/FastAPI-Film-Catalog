@@ -95,7 +95,7 @@ class FilmsStorageGetFilmTestCase(TestCase):
                 )
 
 
-def test_create_or_raise_of_exists(film: Film) -> None:
+def test_create_or_raise_if_exists(film: Film) -> None:
     film_create = FilmCreate(**film.model_dump())
     with pytest.raises(
         FilmAlreadyExistsError,
