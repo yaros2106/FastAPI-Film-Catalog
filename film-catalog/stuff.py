@@ -11,6 +11,7 @@ redis = Redis(
 
 
 def main() -> None:
+    # some comment
     print(redis.ping())
     redis.set("name", "yaros")
     redis.set("temp", "qwerty")
