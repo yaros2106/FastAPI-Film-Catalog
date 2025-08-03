@@ -56,7 +56,7 @@ class FilmsStorage(BaseModel):
     def get_by_slug(self, slug: str) -> Film | None:
         data = redis.hget(
             name=config.REDIS_FILMS_HASH_NAME,
-            key=slug,
+            key=slug
         )
         if data:
             return Film.model_validate_json(data)
