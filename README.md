@@ -1,5 +1,7 @@
 # FastAPI Film Catalog
 
+[![Python checks 🐍](https://github.com/yaros2106/FastAPI-Film-Catalog/actions/workflows/python-checks.yaml/badge.svg?branch=main)](https://github.com/yaros2106/FastAPI-Film-Catalog/actions/workflows/python-checks.yaml)
+
 ## Develop
 
 ### Setup:
