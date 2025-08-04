@@ -7,6 +7,7 @@
 [![Mypy](https://img.shields.io/badge/type%20checker-mypy-blueviolet?style=for-the-badge&logo=python&logoColor=white&labelColor=161b22)](http://mypy-lang.org/)
 [![uv](https://img.shields.io/badge/installer-uv-4B8BBE?style=for-the-badge&logo=python&logoColor=white&labelColor=161b22)](https://github.com/astral-sh/uv)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?style=for-the-badge&logo=pre-commit&logoColor=white&labelColor=161b22)](https://pre-commit.com/)
+
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/yaros2106/FastAPI-Film-Catalog/main.svg)](https://results.pre-commit.ci/latest/github/yaros2106/FastAPI-Film-Catalog/main)
 
 
