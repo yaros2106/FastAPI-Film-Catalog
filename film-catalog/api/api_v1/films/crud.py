@@ -46,7 +46,7 @@ class FilmsStorage(BaseModel):
         redis.hset(
             name=config.REDIS_FILMS_HASH_NAME,
             key=film.slug,
-            value=film.model_dump_json(),
+            value=film.model_dump_json()
         )
 
     def get(self) -> list[Film]:
@@ -54,10 +54,7 @@ class FilmsStorage(BaseModel):
         return [Film.model_validate_json(film) for film in data]
 
     def get_by_slug(self, slug: str) -> Film | None:
-        data = redis.hget(
-            name=config.REDIS_FILMS_HASH_NAME,
-            key=slug,
-        )
+        data = redis.hget(name=config.REDIS_FILMS_HASH_NAME, key=slug)
         if data:
             return Film.model_validate_json(data)
         return None
