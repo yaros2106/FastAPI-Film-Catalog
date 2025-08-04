@@ -46,7 +46,7 @@ class FilmsStorage(BaseModel):
         redis.hset(
             name=config.REDIS_FILMS_HASH_NAME,
             key=film.slug,
-            value=film.model_dump_json(),
+            value=film.model_dump_json()
         )
 
     def get(self) -> list[Film]:
