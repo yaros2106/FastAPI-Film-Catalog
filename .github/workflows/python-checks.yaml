@@ -50,3 +50,10 @@ jobs:
 
       - name: Run mypy
         run: uv run mypy film-catalog
+
+  run-tests:
+    runs-on: ubuntu-latest
+    needs:
+      - run-lints
+    steps:
+      - run: echo "Hello tests"
