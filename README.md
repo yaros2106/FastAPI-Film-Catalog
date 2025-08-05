@@ -43,6 +43,40 @@ Run dev server:
 fastapi dev
 ```
 
+### Run Redis for local development
+
+Before running tests or dev server, make sure Redis is running on port `6380`.
+
+You can run Redis using Docker:
+
+```bash
+docker run -d -p 6380:6379 --name my-redis redis
+```
+
+### Set environment variables for local testing
+
+Set the required environment variables before running tests or starting the dev server:
+
+**PowerShell**:
+```powershell
+$env:TESTING = "1"
+$env:REDIS_PORT = "6380"
+```
+
+**Bash**:
+```bash
+export TESTING=1
+export REDIS_PORT=6380
+```
+
+### Run tests
+
+Run all tests:
+```shell
+uv run pytest
+```
+
+
 ## Snippets
 ```shell
 python -c "import secrets;print(secrets.token_urlsafe(16))"
