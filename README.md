@@ -9,7 +9,7 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?style=for-the-badge&logo=pre-commit&logoColor=white&labelColor=161b22)](https://pre-commit.com/)
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/yaros2106/FastAPI-Film-Catalog/main.svg)](https://results.pre-commit.ci/latest/github/yaros2106/FastAPI-Film-Catalog/main)
-
+[![Coverage](https://codecov.io/gh/yaros2106/FastAPI-Film-Catalog/branch/main/graph/badge.svg?style=for-the-badge&labelColor=2d2f36)](https://codecov.io/gh/yaros2106/FastAPI-Film-Catalog)
 
 ## Develop
 
