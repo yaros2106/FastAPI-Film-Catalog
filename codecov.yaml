@@ -5,6 +5,7 @@ codecov:
 coverage:
   precision: 2
   round: down
+  range: 75..95
   status:
     project:
       default:
