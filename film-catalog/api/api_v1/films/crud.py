@@ -78,7 +78,7 @@ class FilmsStorage(BaseModel):
         log.info("film created: %s", film.slug)
         return film
 
-    def create_or_raise_of_exists(self, film_in: FilmCreate) -> Film:
+    def create_or_raise_if_exists(self, film_in: FilmCreate) -> Film:
         if not self.exists(film_in.slug):
             return self.create(film_in)
         raise FilmAlreadyExistsError(film_in.slug)
