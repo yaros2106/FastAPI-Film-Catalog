@@ -13,7 +13,10 @@ from schemas.film import (
     FilmPartialUpdate,
     FilmUpdate,
 )
-from testing.conftest import create_film_random_slug
+from testing.conftest import (
+    build_film_create_random_slug,
+    create_film_random_slug,
+)
 
 
 class FilmsStorageUpdateTestCase(TestCase):
@@ -101,5 +104,18 @@ def test_create_or_raise_if_exists(film: Film) -> None:
         FilmAlreadyExistsError,
         match=film_create.slug,
     ) as exc_info:
-        storage.create_or_raise_of_exists(film_create)
+        storage.create_or_raise_if_exists(film_create)
     assert exc_info.value.args[0] == film_create.slug
+
+
+def test_create_twice() -> None:
+    film = build_film_create_random_slug()
+    # create film successfully
+    storage.create_or_raise_if_exists(film)
+    # create second time raises
+    with pytest.raises(
+        FilmAlreadyExistsError,
+        match=film.slug,
+    ) as exc_info:
+        storage.create_or_raise_if_exists(film)
+    assert exc_info.value.args == (film.slug,)
