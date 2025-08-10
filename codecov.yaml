@@ -5,10 +5,18 @@ codecov:
 coverage:
   precision: 2
   round: down
-  range: 70..100
+  range: 70..80
   status:
     project:
       default:
-        target: 70%
+        target: 80%
         threshold: 5%
         if_ci_failed: error
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
