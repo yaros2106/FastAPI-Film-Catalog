@@ -98,7 +98,7 @@ jobs:
           dry_run: ${{ env.ACT }}
           fail_ci_if_error: 'true'
 
-      - name: Get the percent coverage
+      - name: Get the coverage percentage
         run: echo "COVERAGE=$(jq -r '.totals.percent_covered_display' coverage.json)" >> $GITHUB_ENV
 
       - name: Update Coverage badge

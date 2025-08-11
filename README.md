@@ -7,6 +7,7 @@
 [![Mypy](https://img.shields.io/badge/type%20checker-mypy-blueviolet?style=for-the-badge&logo=python&logoColor=white&labelColor=161b22)](http://mypy-lang.org/)
 [![uv](https://img.shields.io/badge/installer-uv-4B8BBE?style=for-the-badge&logo=python&logoColor=white&labelColor=161b22)](https://github.com/astral-sh/uv)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?style=for-the-badge&logo=pre-commit&logoColor=white&labelColor=161b22)](https://pre-commit.com/)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Fyaros2106%2F9dd79657afe76d52e3a70bd197475d42%2Fraw%2Fcoverage.json&style=for-the-badge&color=brightgreen&labelColor=161b22)](https://github.com/yaros2106/FastAPI-Film-Catalog/actions/workflows/python-checks.yaml)
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/yaros2106/FastAPI-Film-Catalog/main.svg)](https://results.pre-commit.ci/latest/github/yaros2106/FastAPI-Film-Catalog/main)
 [![Coverage](https://codecov.io/gh/yaros2106/FastAPI-Film-Catalog/branch/main/graph/badge.svg?style=for-the-badge&labelColor=2d2f36)](https://codecov.io/gh/yaros2106/FastAPI-Film-Catalog)
