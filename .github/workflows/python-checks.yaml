@@ -85,7 +85,7 @@ jobs:
         run: uv sync --locked --all-extras --dev
 
       - name: run python tests
-        run: uv run pytest film-catalog --cov=film-catalog --cov-report=xml
+        run: uv run pytest film-catalog --cov=film-catalog --cov-report=xml:coverage.xml --cov-report=json:coverage.json
         env:
           TESTING: 1
           REDIS_PORT: 6379
@@ -97,3 +97,18 @@ jobs:
           files: coverage.xml
           dry_run: ${{ env.ACT }}
           fail_ci_if_error: 'true'
+
+      - name: Get the Percent coverage
+        run: echo "COVERAGE=$(jq -r '.totals.percent_covered_display' coverage.json)" >> $GITHUB_ENV
+
+      - name: Update Coverage badge
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 9dd79657afe76d52e3a70bd197475d42
+          filename: coverage.json
+          label: Coverage
+          message: ${{ env.COVERAGE }}%
+          valColorRange: ${{ env.COVERAGE }}
+          maxColorRange: 90
+          minColorRange: 70
