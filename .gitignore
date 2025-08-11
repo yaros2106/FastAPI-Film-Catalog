@@ -199,3 +199,4 @@ cython_debug/
 
 films-storage.json
 .secrets
+coverage.json
