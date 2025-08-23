@@ -85,7 +85,7 @@ jobs:
         run: uv sync --locked --all-extras --dev
 
       - name: run python tests
-        run: uv run pytest film-catalog --cov=film-catalog --cov-report=xml:coverage.xml --cov-report=json:coverage.json
+        run: uv run pytest film-catalog --cov=film-catalog --cov-report=xml:coverage.xml --cov-report=json:coverage.json --cov-report=html:coverage.html
         env:
           TESTING: 1
           REDIS_PORT: 6379
@@ -97,6 +97,7 @@ jobs:
           path: |
             coverage.xml
             coverage.json
+            coverage.html
           retention-days: 1
 
   update-coverage-badge:
