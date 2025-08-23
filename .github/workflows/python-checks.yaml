@@ -130,6 +130,8 @@ jobs:
     needs:
       - run-tests
     steps:
+      - uses: actions/checkout@v4
+
       - name: download coverage reports
         uses: actions/download-artifact@v5
         with:
