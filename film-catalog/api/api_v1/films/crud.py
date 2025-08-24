@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 redis = Redis(
     host=settings.redis.connection.host,
     port=settings.redis.connection.port,
-    db=config.REDIS_DB_FILMS,
+    db=settings.redis.db.films,
     decode_responses=True,
 )
 

@@ -3,7 +3,6 @@ from typing import cast
 from redis import Redis
 
 from api.api_v1.auth.services.user_helper import AbstractUserHelper
-from core import config
 from core.config import settings
 
 
@@ -35,5 +34,5 @@ class RedisUserHelper(AbstractUserHelper):
 redis_users = RedisUserHelper(
     host=settings.redis.connection.host,
     port=settings.redis.connection.port,
-    db=config.REDIS_DB_USERS,
+    db=settings.redis.db.users,
 )
