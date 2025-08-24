@@ -11,10 +11,6 @@ LOG_FORMAT: str = (
 )
 
 
-REDIS_TOKENS_SET_NAME = "tokens"
-REDIS_FILMS_HASH_NAME = "films"
-
-
 class LoggingConfig(BaseModel):
     log_level: int = logging.INFO
     log_format: str = LOG_FORMAT
@@ -33,9 +29,15 @@ class RedisDataBaseConfig(BaseModel):
     films: int = 3
 
 
+class RedisCollectionsNamesConfig(BaseModel):
+    tokens_set: str = "tokens"
+    films_hash: str = "films"
+
+
 class RedisConfig(BaseModel):
     connection: RedisConnectionConfig = RedisConnectionConfig()
     db: RedisDataBaseConfig = RedisDataBaseConfig()
+    collection_name: RedisCollectionsNamesConfig = RedisCollectionsNamesConfig()
 
 
 class Settings(BaseSettings):

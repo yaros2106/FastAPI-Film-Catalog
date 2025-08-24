@@ -1,7 +1,7 @@
 from redis import Redis
 
 from api.api_v1.auth.services.token_helper import AbstractTokenHelper
-from core.config import REDIS_TOKENS_SET_NAME, settings
+from core.config import settings
 
 
 class RedisTokenHelper(AbstractTokenHelper):
@@ -44,5 +44,5 @@ redis_tokens = RedisTokenHelper(
     host=settings.redis.connection.host,
     port=settings.redis.connection.port,
     db=settings.redis.db.tokens,
-    token_set_name=REDIS_TOKENS_SET_NAME,
+    token_set_name=settings.redis.collection_name.tokens_set,
 )

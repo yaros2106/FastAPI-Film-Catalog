@@ -10,7 +10,6 @@ from pydantic import (
 )
 from redis import Redis
 
-from core import config
 from core.config import settings
 from schemas.film import (
     Film,
@@ -42,21 +41,22 @@ class FilmAlreadyExistsError(FilmBaseError):
 
 
 class FilmsStorage(BaseModel):
+    hash_name: str
 
     def save_film_data(self, film: Film) -> None:
         redis.hset(
-            name=config.REDIS_FILMS_HASH_NAME,
+            name=self.hash_name,
             key=film.slug,
             value=film.model_dump_json(),
         )
 
     def get(self) -> list[Film]:
-        data = redis.hvals(name=config.REDIS_FILMS_HASH_NAME)
+        data = redis.hvals(name=self.hash_name)
         return [Film.model_validate_json(film) for film in data]
 
     def get_by_slug(self, slug: str) -> Film | None:
         data = redis.hget(
-            name=config.REDIS_FILMS_HASH_NAME,
+            name=self.hash_name,
             key=slug,
         )
         if data:
@@ -66,7 +66,7 @@ class FilmsStorage(BaseModel):
     def exists(self, slug: str) -> bool:
         return bool(
             redis.hexists(
-                name=config.REDIS_FILMS_HASH_NAME,
+                name=self.hash_name,
                 key=slug,
             ),
         )
@@ -86,7 +86,7 @@ class FilmsStorage(BaseModel):
 
     def delete_by_slug(self, slug: str) -> None:
         redis.hdel(
-            config.REDIS_FILMS_HASH_NAME,
+            self.hash_name,
             slug,
         )
         log.info("film deleted: %s", slug)
@@ -117,4 +117,6 @@ class FilmsStorage(BaseModel):
         return film
 
 
-storage = FilmsStorage()
+storage = FilmsStorage(
+    hash_name=settings.redis.collection_name.films_hash,
+)
