@@ -1,8 +1,8 @@
 import logging
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Self
 
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +39,14 @@ class RedisDataBaseConfig(BaseModel):
     users: int = 2
     films: int = 3
 
+    @model_validator(mode="after")
+    def check_unique_numbers_db(self) -> Self:
+        db_numbers = list(self.model_dump().values())
+        if len(set(db_numbers)) != len(db_numbers):
+            msg = "Database numbers must be unique"
+            raise ValueError(msg)
+        return self
+
 
 class RedisCollectionsNamesConfig(BaseModel):
     tokens_set: str = "tokens"
@@ -53,7 +61,6 @@ class RedisConfig(BaseModel):
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        cli_parse_args=True,
         case_sensitive=False,
     )
     logging: LoggingConfig = LoggingConfig()
