@@ -25,6 +25,14 @@ Install all packages:
 uv sync
 ```
 
+### Configuration `.env` file
+
+The application requires environment variables to work.
+Copy the `.env.template` file to `.env` and specify your values:
+```shell
+cp .env.template .env
+```
+
 ### Configure pre-commit
 
 Install pre-commit hook:
@@ -50,7 +58,7 @@ Before running tests or dev server, make sure Redis is running on port `6380`.
 
 You can run Redis using Docker:
 
-```bash
+```shell
 docker run -d -p 6380:6379 --name my-redis redis
 ```
 
