@@ -85,8 +85,8 @@ jobs:
         run: uv run pytest film-catalog --cov=film-catalog --cov-report=xml:coverage.xml --cov-report=json:coverage.json --cov-report=html:coverage_html
         env:
           TESTING: 1
-          FILM_CATALOG__REDIS__CONNECTION__PORT: redis
-          FILM_CATALOG__REDIS__CONNECTION__HOST: 6379
+          FILM_CATALOG__REDIS__CONNECTION__HOST: redis
+          FILM_CATALOG__REDIS__CONNECTION__PORT: 6379
 
       - name: Upload coverage reports artifacts
         uses: actions/upload-artifact@v4
