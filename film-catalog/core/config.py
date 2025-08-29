@@ -103,7 +103,7 @@ class Settings(BaseSettings):
         A tuple containing the sources and their order for loading the settings values.
         """
         return (
-            init_settings,  # дефолты имеют самый низкий приоритет
+            init_settings,  # дефолты имеют самый высокий приоритет
             env_settings,  # переменные окружения переопределяют все кроме init_settings
             dotenv_settings,  # .env переопределяет все кроме того что выше
             file_secret_settings,  # временно не используем
