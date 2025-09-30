@@ -1,25 +1,19 @@
 from fastapi import (
     APIRouter,
-    Request,
 )
+from fastapi.responses import HTMLResponse
+
+from core.config import BASE_DIR
 
 router = APIRouter(
     tags=["Docs"],
 )
 
 
-@router.get("/")
-def read_root(
-    request: Request,
-    name: str = "Yaros",
-) -> dict[str, str]:
-
-    docs_url = request.url.replace(
-        path="/docs",
-        query="",
-    )
-
-    return {
-        "message": f"Hello, {name}!",
-        "docs": str(docs_url),
-    }
+@router.get(
+    "/",
+    response_class=HTMLResponse,
+    include_in_schema=False,
+)
+def read_root() -> str:
+    return (BASE_DIR / "pages" / "home.html").read_text()
