@@ -1,4 +1,3 @@
-from datetime import UTC, datetime
 from typing import Any
 
 from fastapi import (
@@ -21,16 +20,6 @@ router = APIRouter(
 )
 def read_root(request: Request) -> HTMLResponse:
     context: dict[str, Any] = {}
-    today = datetime.now(UTC).date()
-    features = [
-        "Create films",
-        "Real-time statistics",
-        "Shared management",
-    ]
-    context.update(
-        today=today,
-        features=features,
-    )
     return templates.TemplateResponse(
         request=request,
         name="home.html",
