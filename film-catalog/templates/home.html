@@ -5,11 +5,11 @@
 {% block main %}
 	<h1>Hello, Film Catalog!</h1>
   <div>
-    <a href="/docs">Swagger docs</a>
+    <a class="docs-link" href="/docs">Swagger docs</a>
   </div>
 
   <h3 class="my-4">Features</h3>
-  <ul class="list-group list-features">
+  <ul class="list-group">
     {% for feature in features %}
       <li class="list-group-item feature-item">{{ feature }}</li>
     {% endfor %}

@@ -1,7 +1,40 @@
 body {
-  background-color: #c4ccf1;
+  background-color: #323839;
+  color: #eee4d4;
+}
+
+.navbar {
+  background-color: #232020;
+}
+
+.navbar-brand {
+  color: #eee4d4;
+}
+
+.navbar-brand:hover {
+  color: #9c8f84;
+  transition: color .4s;
+}
+
+.nav-link {
+  color: #eee4d4;
+}
+
+.nav-link:hover {
+  color: #9c8f84;
+  transition: color .4s;
+}
+
+.navbar-toggler {
+  background-color: #eee4d4;
+}
+
+.docs-link {
+  color: #d4d986;
+  font-size: 25px;
 }
 
 .feature-item {
-  background-color: #1dadd7;
+  background-color: #232020;
+  color: #eee4d4;
 }
