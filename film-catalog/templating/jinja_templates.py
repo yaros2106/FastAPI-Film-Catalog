@@ -1,4 +1,4 @@
-from datetime import UTC, date, datetime
+from datetime import date, datetime
 
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
@@ -9,8 +9,8 @@ from core.config import BASE_DIR
 def inject_current_date_and_dt(
     request: Request,  # noqa: ARG001
 ) -> dict[str, date]:
-    today = datetime.now(UTC).date()
-    now = datetime.now(UTC)
+    today = datetime.now().date()  # noqa: DTZ005
+    now = datetime.now()  # noqa: DTZ005
     return {
         "today": today,
         "now": now,
