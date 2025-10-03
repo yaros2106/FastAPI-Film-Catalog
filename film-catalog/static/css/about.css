@@ -1,0 +1,71 @@
+.title {
+  color: #dcbc8a;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.snapshot-api {
+  border-radius: 25px;
+}
+
+.snapshot-api > img {
+  border-radius: 25px 25px 0 0;
+
+}
+
+.card {
+  background-color: #232527;
+  border-color: #ffffff;
+  color: #eee4d4;
+}
+
+.card-feature {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+  background-color: #232020;
+  color: #eec89b;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+
+.gh_repo_link {
+  color: #dcbc8a;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: color .4s, border-bottom .4s;
+}
+
+.gh_repo_link:hover {
+  color: #e7d5ba;
+  border-bottom: 1px dashed #e7d5ba;
+}
+
+.contact-me {
+  max-width: 300px;
+}
+
+.vk-badge {
+  background-color: #dcbc8a;
+  padding: 0.5em 0.8em;
+  border-radius: 10px;
+  transition: background-color 0.4s, transform 0.3s;
+}
+
+.vk-badge:hover {
+  background-color: #e7d5ba;
+  transform: scale(1.05);
+}
+
+.vk-badge > a {
+  color: #232020;
+  text-decoration: none;
+}

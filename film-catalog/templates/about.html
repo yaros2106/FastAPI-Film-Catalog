@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}About - {{ super() }}{% endblock %}
+
+{% block style_link %}
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/about.css') }}">
+{% endblock %}
+
+{% block main %}
+  <h1 class="title text-center">About Film Catalog</h1>
+  <div class="my-4">
+    <p class="fs-5">The <strong>FastAPI Film Catalog</strong> is a fast and simple web API to manage a collection of
+      films. Built
+      with Python and FastAPI, it stores film data in Redis for quick access.</p>
+  </div>
+
+  <div class="card snapshot-api mb-12">
+    <img src="{{ url_for('static', path='/images/api_films.jpg') }}"
+         class="card-img-top"
+         alt="API Films"
+         style="width: 100%; height: auto; object-fit: cover;"
+    >
+    <div class="card-body text-center">
+      <h5 class="card-title fs-3">Swagger UI Overview</h5>
+      <p class="card-text fs-5">This is a snapshot of the interactive Swagger UI, showcasing the Film Catalog API
+        endpoints
+        for easy testing and exploration.</p>
+      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+
+  <h2 class="title my-4 text-center">Key Features</h2>
+  <div class="row text-center justify-content-center">
+
+    <div class="col-auto col-sm-6 col-md-4 col-lg-3 my-3">
+      <div class="card card-feature mb-3 h-100" style="max-width: 18rem;">
+        <div class="card-header fs-3">Full CRUD API</div>
+        <div class="card-body">
+          <p class="card-text fs-5">Create, read, update, and delete films with POST, PATCH, PUT, and DELETE</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-auto col-sm-6 col-md-4 col-lg-3 my-3">
+      <div class="card card-feature mb-3 h-100" style="max-width: 18rem;">
+        <div class="card-header fs-3">Secure Access</div>
+        <div class="card-body">
+          <p class="card-text fs-5">Uses Static API Token and Basic Auth for secure API calls</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-auto col-sm-6 col-md-4 col-lg-3 my-3">
+      <div class="card card-feature mb-3 h-100" style="max-width: 18rem;">
+        <div class="card-header fs-3">Redis Storage</div>
+        <div class="card-body">
+          <p class="card-text fs-5">Stores data in Redis for speed and efficiency</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-auto col-sm-6 col-md-4 col-lg-3 my-3">
+      <div class="card card-feature mb-3 h-100" style="max-width: 18rem;">
+        <div class="card-header fs-3">Reliable Code</div>
+        <div class="card-body">
+          <p class="card-text fs-5">84% test coverage ensures a stable application</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-center mb-4">
+    <p class="fs-5">
+      Check out the <a class="gh_repo_link" href="https://github.com/yaros2106/FastAPI-Film-Catalog">GitHub
+      repository</a> to learn more or
+      contribute to this project!
+    </p>
+  </div>
+
+  <h2 class="title text-center my-4">Social network</h2>
+  <div class="card text-center contact-me mx-auto ">
+    <div class="card-body">
+      <h2>Contact author in <span class="badge vk-badge"><a href="https://vk.com/yarosik_berezik">VK</a></span>
+      </h2>
+    </div>
+  </div>
+
+{% endblock %}
