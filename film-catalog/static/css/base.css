@@ -20,6 +20,10 @@ body {
   color: #eee4d4;
 }
 
+.navbar-nav .nav-link.active {
+  color: #eec89b;
+}
+
 .nav-link:hover {
   color: #9c8f84;
   transition: color .4s;
@@ -27,14 +31,4 @@ body {
 
 .navbar-toggler {
   background-color: #eee4d4;
-}
-
-.docs-link {
-  color: #d4d986;
-  font-size: 25px;
-}
-
-.feature-item {
-  background-color: #232020;
-  color: #eee4d4;
 }
