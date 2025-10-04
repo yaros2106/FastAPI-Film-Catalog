@@ -1,5 +1,5 @@
 __all__ = (
-    "FilmAlreadyExistsError",
+    "FilmsStorage",
     "storage",
 )
 
@@ -17,6 +17,7 @@ from schemas.film import (
     FilmPartialUpdate,
     FilmUpdate,
 )
+from storage.films.exceptions import FilmAlreadyExistsError
 
 log = logging.getLogger(__name__)
 
@@ -26,18 +27,6 @@ redis = Redis(
     db=settings.redis.db.films,
     decode_responses=True,
 )
-
-
-class FilmBaseError(Exception):
-    """
-    Base exception class for film related errors.
-    """
-
-
-class FilmAlreadyExistsError(FilmBaseError):
-    """
-    Raised when a film on creation already exists.
-    """
 
 
 class FilmsStorage(BaseModel):

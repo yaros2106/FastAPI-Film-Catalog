@@ -7,10 +7,6 @@ from fastapi import (
     status,
 )
 
-from api.api_v1.films.crud import (
-    FilmAlreadyExistsError,
-    storage,
-)
 from api.api_v1.films.dependencies import (
     api_token_or_user_basic_auth_required_for_unsafe_methods,
 )
@@ -19,6 +15,10 @@ from schemas.film import (
     FilmCreate,
     FilmRead,
 )
+from storage.films.crud import (
+    storage,
+)
+from storage.films.exceptions import FilmAlreadyExistsError
 
 log = logging.getLogger(__name__)
 

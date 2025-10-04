@@ -18,8 +18,8 @@ from api.api_v1.auth.services import (
     redis_tokens,
     redis_users,
 )
-from api.api_v1.films.crud import storage
 from schemas.film import Film
+from storage.films.crud import storage
 
 log = logging.getLogger(__name__)
 
