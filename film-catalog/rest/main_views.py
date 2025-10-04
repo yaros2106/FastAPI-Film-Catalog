@@ -15,7 +15,6 @@ router = APIRouter(
     "/",
     name="home",
     response_class=HTMLResponse,
-    include_in_schema=False,
 )
 def home_page(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
@@ -28,7 +27,6 @@ def home_page(request: Request) -> HTMLResponse:
     "/about/",
     name="about",
     response_class=HTMLResponse,
-    include_in_schema=False,
 )
 def about_page(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(

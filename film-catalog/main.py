@@ -6,9 +6,9 @@ from fastapi import (
 from fastapi.staticfiles import StaticFiles
 
 from api import router as api_router
-from api.main_views import router as main_router
 from app_lifespan import lifespan
 from core.config import BASE_DIR, settings
+from rest import router as rest_router
 
 logging.basicConfig(
     level=settings.logging.log_level,
@@ -24,4 +24,4 @@ app = FastAPI(
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 app.include_router(api_router)
-app.include_router(main_router)
+app.include_router(rest_router)
