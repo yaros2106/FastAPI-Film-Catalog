@@ -18,8 +18,8 @@ from api.api_v1.auth.services import (
     redis_tokens,
     redis_users,
 )
+from dependencies.films import GetFilmStorage
 from schemas.film import Film
-from storage.films.crud import storage
 
 log = logging.getLogger(__name__)
 
@@ -47,6 +47,7 @@ user_basic_auth = HTTPBasic(
 
 def prefetch_film(
     slug: str,
+    storage: GetFilmStorage,
 ) -> Film:
 
     film: Film | None = storage.get_by_slug(slug=slug)
