@@ -10,7 +10,7 @@ body {
 .navbar-brand {
   color: #eee4d4;
   letter-spacing: 1px;
-  margin-right: 45px;
+  margin-right: 50px;
 }
 
 .navbar-brand:hover {
@@ -21,6 +21,7 @@ body {
 .nav-link {
   color: #eee4d4;
   letter-spacing: 1px;
+  margin-right: 10px;
 }
 
 .navbar-nav .nav-link.active {
