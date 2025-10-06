@@ -28,7 +28,17 @@
 
           <tr>
             <td><code>{{ film.slug }}</code></td>
-            <td>{{ film.title }}</td>
+            <td>
+              {% if film.target_url %}
+                <a
+                  target="_blank"
+                  class="target_url_film"
+                  href="{{ film.target_url }}">{{ film.title }}
+                </a>
+              {% else %}
+                {{ film.title }}
+              {% endif %}
+            </td>
             <td>{{ film.description }}</td>
             <td>{{ film.year }}</td>
             <td>{{ film.duration_minutes }}</td>

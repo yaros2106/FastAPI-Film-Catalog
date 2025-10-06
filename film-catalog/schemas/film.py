@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from annotated_types import Ge, Le, Len
-from pydantic import BaseModel
+from pydantic import AnyHttpUrl, BaseModel
 
 SlugString = Annotated[
     str,
@@ -32,6 +32,7 @@ class FilmBase(BaseModel):
     description: str
     year: int
     duration_minutes: int
+    target_url: AnyHttpUrl | None = None
 
 
 class FilmCreate(BaseModel):
@@ -44,6 +45,7 @@ class FilmCreate(BaseModel):
     description: DescriptionString
     year: YearString
     duration_minutes: DurationMinutesString
+    target_url: AnyHttpUrl | None = None
 
 
 class FilmUpdate(FilmBase):
@@ -55,6 +57,7 @@ class FilmUpdate(FilmBase):
     description: DescriptionString
     year: YearString
     duration_minutes: DurationMinutesString
+    target_url: AnyHttpUrl | None = None
 
 
 class FilmPartialUpdate(BaseModel):
@@ -66,6 +69,7 @@ class FilmPartialUpdate(BaseModel):
     description: DescriptionString | None = None
     year: YearString | None = None
     duration_minutes: DurationMinutesString | None = None
+    target_url: AnyHttpUrl | None = None
 
 
 class FilmRead(FilmBase):
