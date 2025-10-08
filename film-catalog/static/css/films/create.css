@@ -1,0 +1,16 @@
+.form-control:focus {
+  border-color: #eec89b;
+  border-width: 2px;
+  box-shadow: none;
+}
+
+.submit-btn {
+  background-color: #eec89b;
+  color: #232020;
+  border-style: none;
+}
+
+.submit-btn:hover {
+  background-color: #b89d78;
+  color: #232020;
+}

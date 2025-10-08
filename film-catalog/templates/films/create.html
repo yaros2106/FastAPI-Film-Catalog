@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Create a new Film
+{% endblock %}
+
+{% block style_link %}
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/films/create.css') }}">
+{% endblock %}
+
+{% block main %}
+
+  <h1 class="title my-4">Create a new Film</h1>
+  <div class="row">
+    <div class="col col-12 col-md-6 col-lg-6">
+      <form action="{{ url_for('films:create_view') }}" method="post">
+
+        {% for field_name, field_schema in model_schema.properties.items() %}
+          {% set is_required = field_name in required_list %}
+          {% set field_type = field_schema.type | default(None) %}
+
+          <div class="form-floating mb-3">
+
+            {% if field_type == "string" %}
+              <input
+                id="{{ field_name }}"
+                name="{{ field_name }}"
+                type="text"
+                class="form-control"
+                placeholder="_"
+                {% if field_schema.maxLength is defined %}
+                maxlength="{{ field_schema.maxLength }}"
+                {% endif %}
+                {% if field_schema.minLength is defined %}
+                minLength="{{ field_schema.minLength }}"
+                {% endif %}
+                {% if is_required %}required{% endif %}
+              >
+
+            {% elif field_type == "integer" %}
+              <input
+                id="{{ field_name }}"
+                name="{{ field_name }}"
+                type="number"
+                class="form-control"
+                placeholder="_"
+                {% if field_schema.maximum is defined %}
+                max="{{ field_schema.maximum }}"
+                {% endif %}
+                {% if field_schema.minimum is defined %}
+                min="{{ field_schema.minimum }}"
+                {% endif %}
+                {% if is_required %}required{% endif %}
+              >
+
+            {% else %}
+              <input
+                id="{{ field_name }}"
+                name="{{ field_name }}"
+                type="text"
+                class="form-control"
+                placeholder="_"
+                {% if is_required %}required{% endif %}
+              >
+            {% endif %}
+
+            <label
+              for="{{ field_name }}">{{ field_schema.title }}
+            </label>
+          </div>
+        {% endfor %}
+
+        <input type="submit" value="Create" class="btn btn-primary submit-btn">
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

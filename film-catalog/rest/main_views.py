@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse
 from templating import templates
 
 router = APIRouter(
-    tags=["Docs"],
+    include_in_schema=False,
 )
 
 
