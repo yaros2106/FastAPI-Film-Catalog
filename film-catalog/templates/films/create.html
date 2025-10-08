@@ -1,3 +1,5 @@
+{% from 'macro/form_fields.html' import form_field %}
+
 {% extends 'base.html' %}
 
 {% block title %}
@@ -16,58 +18,17 @@
       <form action="{{ url_for('films:create_view') }}" method="post">
 
         {% for field_name, field_schema in model_schema.properties.items() %}
-          {% set is_required = field_name in required_list %}
+          {% set is_required = field_name in (model_schema.get('required') or []) %}
           {% set field_type = field_schema.type | default(None) %}
+          {% set default = field_schema.get('default') or None %}
+          {{ form_field(
+                field_name=field_name,
+                field_schema=field_schema,
+                field_type=field_type,
+                default=default,
+                is_required=is_required
+               ) }}
 
-          <div class="form-floating mb-3">
-
-            {% if field_type == "string" %}
-              <input
-                id="{{ field_name }}"
-                name="{{ field_name }}"
-                type="text"
-                class="form-control"
-                placeholder="_"
-                {% if field_schema.maxLength is defined %}
-                maxlength="{{ field_schema.maxLength }}"
-                {% endif %}
-                {% if field_schema.minLength is defined %}
-                minLength="{{ field_schema.minLength }}"
-                {% endif %}
-                {% if is_required %}required{% endif %}
-              >
-
-            {% elif field_type == "integer" %}
-              <input
-                id="{{ field_name }}"
-                name="{{ field_name }}"
-                type="number"
-                class="form-control"
-                placeholder="_"
-                {% if field_schema.maximum is defined %}
-                max="{{ field_schema.maximum }}"
-                {% endif %}
-                {% if field_schema.minimum is defined %}
-                min="{{ field_schema.minimum }}"
-                {% endif %}
-                {% if is_required %}required{% endif %}
-              >
-
-            {% else %}
-              <input
-                id="{{ field_name }}"
-                name="{{ field_name }}"
-                type="text"
-                class="form-control"
-                placeholder="_"
-                {% if is_required %}required{% endif %}
-              >
-            {% endif %}
-
-            <label
-              for="{{ field_name }}">{{ field_schema.title }}
-            </label>
-          </div>
         {% endfor %}
 
         <input type="submit" value="Create" class="btn btn-primary submit-btn">

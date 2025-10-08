@@ -18,11 +18,8 @@ router = APIRouter(
 def get_page_create_film(request: Request) -> HTMLResponse:
     context: dict[str, Any] = {}
     model_schema = FilmCreate.model_json_schema()
-    required_list = model_schema.get("required", [])
-
     context.update(
         model_schema=model_schema,
-        required_list=required_list,
     )
     return templates.TemplateResponse(
         request=request,
