@@ -7,10 +7,21 @@
 .submit-btn {
   background-color: #eec89b;
   color: #232020;
-  border-style: none;
+  border-color: #232020;
 }
 
 .submit-btn:hover {
   background-color: #b89d78;
   color: #232020;
+  border-color: #232020;
+}
+
+.back-to-films-list-btn {
+  background-color: #212529;
+  border-color: #dcbc8a;
+}
+
+.back-to-films-list-btn:hover {
+  background-color: #2e3339;
+  border-color: #dcbc8a;
 }

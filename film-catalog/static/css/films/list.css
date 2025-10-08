@@ -29,3 +29,22 @@
 td .target_url_film {
   color: #dcbc8a;
 }
+
+.create-film-btn {
+  background-color: #212529;
+  border-color: #dcbc8a;
+}
+
+.back-to-list-films {
+  display: flex;
+  justify-content: right;
+}
+
+.create-film-btn:hover  {
+  background-color: #2e3339;
+  border-color: #dcbc8a;
+}
+
+.create_first_film_link {
+  color: #eec89b;
+}

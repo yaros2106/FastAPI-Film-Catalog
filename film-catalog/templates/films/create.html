@@ -30,10 +30,19 @@
                ) }}
 
         {% endfor %}
-
         <input type="submit" value="Create" class="btn btn-primary submit-btn">
+
       </form>
+
+      <div class="mt-5">
+        <a href="{{ url_for('films:list') }}" class="btn btn-secondary">
+          Back to Films list
+        </a>
+      </div>
+
     </div>
   </div>
+
+
 
 {% endblock %}
