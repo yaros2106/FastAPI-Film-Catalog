@@ -1,8 +1,9 @@
 from typing import Annotated, Any
 
-from fastapi import APIRouter, Form, Request
-from starlette.responses import HTMLResponse
+from fastapi import APIRouter, Form, Request, status
+from starlette.responses import HTMLResponse, RedirectResponse
 
+from dependencies.films import GetFilmStorage
 from schemas.film import FilmCreate
 from templating import templates
 
@@ -33,9 +34,15 @@ def get_page_create_film(request: Request) -> HTMLResponse:
     name="films:create",
 )
 def create_film(
+    request: Request,
+    storage: GetFilmStorage,
     film_create: Annotated[
         FilmCreate,
         Form(),
     ],
-) -> dict[str, str | int]:
-    return film_create.model_dump(mode="json")
+) -> RedirectResponse:
+    storage.create_or_raise_if_exists(film_create)
+    return RedirectResponse(
+        url=request.url_for("films:list"),
+        status_code=status.HTTP_303_SEE_OTHER,
+    )
