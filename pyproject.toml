@@ -154,6 +154,8 @@ ignore = [
     "RUF002",  # ambiguous-unicode-character-docstring (RUF002)
     "RUF003",  # ambiguous-unicode-character-comment (RUF003)
     "S101",  # assert (S101) Checks for uses of the assert keyword.
+    "FBT001",  # boolean-type-hint-positional-argument (FBT001)
+    "FBT002",  # boolean-default-value-positional-argument (FBT002)
 ]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
