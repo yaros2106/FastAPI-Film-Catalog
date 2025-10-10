@@ -5,6 +5,7 @@ from starlette.responses import HTMLResponse, RedirectResponse
 
 from dependencies.films import GetFilmStorage
 from schemas.film import FilmCreate
+from storage.films.exceptions import FilmAlreadyExistsError
 from templating import templates
 
 router = APIRouter(
@@ -32,6 +33,7 @@ def get_page_create_film(request: Request) -> HTMLResponse:
 @router.post(
     "/",
     name="films:create",
+    response_model=None,
 )
 def create_film(
     request: Request,
@@ -40,9 +42,29 @@ def create_film(
         FilmCreate,
         Form(),
     ],
-) -> RedirectResponse:
-    storage.create_or_raise_if_exists(film_create)
-    return RedirectResponse(
-        url=request.url_for("films:list"),
-        status_code=status.HTTP_303_SEE_OTHER,
+) -> RedirectResponse | HTMLResponse:
+    try:
+        storage.create_or_raise_if_exists(film_create)
+    except FilmAlreadyExistsError:
+        errors = {
+            "slug": f"film with slug {film_create.slug!r} already exists.",
+        }
+    else:
+        return RedirectResponse(
+            url=request.url_for("films:list"),
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+    context: dict[str, Any] = {}
+    model_schema = FilmCreate.model_json_schema()
+    context.update(
+        model_schema=model_schema,
+        errors=errors,
+        validated=True,
+        form_data=film_create,
+    )
+    return templates.TemplateResponse(
+        request=request,
+        name="films/create.html",
+        context=context,
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
     )

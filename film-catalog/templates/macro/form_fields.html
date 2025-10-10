@@ -2,19 +2,27 @@
            field_name,
            field_schema,
            field_type,
-           default=None,
+           validated=False,
+           error=None,
+           value=None,
            is_required=True
   ) %}
-  <div class="form-floating mb-3">
+  <div class="form-floating mb-3 {% if validated %}has-validation{% endif %}">
 
     {% if field_type == "string" %}
       <input
         id="{{ field_name }}"
         name="{{ field_name }}"
         type="text"
+
+        {% if validated %}
+        class="form-control {% if error %}is-invalid{% else %}is-valid{% endif %}"
+        {% else %}
         class="form-control"
+        {% endif %}
+
         placeholder="_"
-        {% if default != None %}value="{{ default }}"{% endif %}
+        {% if value != None %}value="{{ value }}"{% endif %}
         {% if field_schema.maxLength is defined %}
         maxlength="{{ field_schema.maxLength }}"
         {% endif %}
@@ -29,9 +37,15 @@
         id="{{ field_name }}"
         name="{{ field_name }}"
         type="number"
+
+        {% if validated %}
+        class="form-control {% if error %}is-invalid{% else %}is-valid{% endif %}"
+        {% else %}
         class="form-control"
+        {% endif %}
+
         placeholder="_"
-        {% if default != None %}value="{{ default }}"{% endif %}
+        {% if value != None %}value="{{ value }}"{% endif %}
         {% if field_schema.maximum is defined %}
         max="{{ field_schema.maximum }}"
         {% endif %}
@@ -46,9 +60,15 @@
         id="{{ field_name }}"
         name="{{ field_name }}"
         type="text"
+
+        {% if validated %}
+        class="form-control {% if error %}is-invalid{% else %}is-valid{% endif %}"
+        {% else %}
         class="form-control"
+        {% endif %}
+
         placeholder="_"
-        {% if default != None %}value="{{ default }}"{% endif %}
+        {% if value != None %}value="{{ value }}"{% endif %}
         {% if is_required %}required{% endif %}
       >
     {% endif %}
@@ -56,5 +76,14 @@
     <label
       for="{{ field_name }}">{{ field_schema.title }}
     </label>
+
+    {% if validated %}
+      {% if error %}
+        <div class="invalid-feedback">
+          {{ error }}
+        </div>
+      {% endif %}
+    {% endif %}
+
   </div>
 {% endmacro %}
