@@ -1,6 +1,8 @@
-from typing import Annotated, Any
+from collections.abc import Mapping
+from typing import Any
 
-from fastapi import APIRouter, Form, Request, status
+from fastapi import APIRouter, Request, status
+from pydantic import BaseModel, ValidationError
 from starlette.responses import HTMLResponse, RedirectResponse
 
 from dependencies.films import GetFilmStorage
@@ -30,19 +32,49 @@ def get_page_create_film(request: Request) -> HTMLResponse:
     )
 
 
+def create_view_validation_response(
+    request: Request,
+    errors: dict[str, str] | None = None,
+    form_data: BaseModel | Mapping[str, Any] | None = None,
+    validated: bool = True,
+) -> HTMLResponse:
+    context: dict[str, Any] = {}
+    model_schema = FilmCreate.model_json_schema()
+    context.update(
+        model_schema=model_schema,
+        errors=errors,
+        validated=validated,
+        form_data=form_data,
+    )
+    return templates.TemplateResponse(
+        request=request,
+        name="films/create.html",
+        context=context,
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+    )
+
+
 @router.post(
     "/",
     name="films:create",
     response_model=None,
 )
-def create_film(
+async def create_film(
     request: Request,
     storage: GetFilmStorage,
-    film_create: Annotated[
-        FilmCreate,
-        Form(),
-    ],
 ) -> RedirectResponse | HTMLResponse:
+    async with request.form() as form:
+        try:
+            film_create = FilmCreate.model_validate(form)
+        except ValidationError as e:
+            errors: dict[str, str] = {
+                str(error["loc"][0]): error["msg"] for error in e.errors()
+            }
+            return create_view_validation_response(
+                request=request,
+                errors=errors,
+                form_data=form,
+            )
     try:
         storage.create_or_raise_if_exists(film_create)
     except FilmAlreadyExistsError:
@@ -54,17 +86,8 @@ def create_film(
             url=request.url_for("films:list"),
             status_code=status.HTTP_303_SEE_OTHER,
         )
-    context: dict[str, Any] = {}
-    model_schema = FilmCreate.model_json_schema()
-    context.update(
-        model_schema=model_schema,
-        errors=errors,
-        validated=True,
-        form_data=film_create,
-    )
-    return templates.TemplateResponse(
+    return create_view_validation_response(
         request=request,
-        name="films/create.html",
-        context=context,
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        errors=errors,
+        form_data=film_create,
     )
