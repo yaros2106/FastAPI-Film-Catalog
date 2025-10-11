@@ -5,7 +5,7 @@ from rich import print
 from rich.console import Console
 from rich.panel import Panel
 
-from api.api_v1.auth.services import redis_tokens as tokens
+from services.auth import redis_tokens as tokens
 
 app = typer.Typer(
     name="tokens",

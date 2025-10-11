@@ -2,8 +2,8 @@ from typing import cast
 
 from redis import Redis
 
-from api.api_v1.auth.services.user_helper import AbstractUserHelper
 from core.config import settings
+from services.auth.user_helper import AbstractUserHelper
 
 
 class RedisUserHelper(AbstractUserHelper):

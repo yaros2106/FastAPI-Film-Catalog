@@ -1,4 +1,3 @@
-import logging
 from typing import Annotated
 
 from fastapi import (
@@ -9,38 +8,24 @@ from fastapi import (
 )
 from fastapi.security import (
     HTTPAuthorizationCredentials,
-    HTTPBasic,
     HTTPBasicCredentials,
     HTTPBearer,
 )
 
-from api.api_v1.auth.services import (
-    redis_tokens,
-    redis_users,
+from dependencies.auth import (
+    UNSAFE_METHODS,
+    user_basic_auth,
+    validate_basic_auth,
 )
 from dependencies.films import GetFilmStorage
 from schemas.film import Film
-
-log = logging.getLogger(__name__)
-
-UNSAFE_METHODS = frozenset(
-    {
-        "POST",
-        "PUT",
-        "PATCH",
-        "DELETE",
-    },
+from services.auth import (
+    redis_tokens,
 )
 
 static_api_token = HTTPBearer(
     scheme_name="Static API Token",
     description="Your **Static API Token** from the developer portal. [Read more](#)",
-    auto_error=False,
-)
-
-user_basic_auth = HTTPBasic(
-    scheme_name="Basic Auth",
-    description="Your basic username and password auth  ",
     auto_error=False,
 )
 
@@ -90,36 +75,6 @@ def validate_api_token(
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Invalid API token",
-    )
-
-
-def user_basic_auth_required_for_unsafe_methods(
-    request: Request,
-    credentials: Annotated[
-        HTTPBasicCredentials | None,
-        Depends(user_basic_auth),
-    ] = None,
-) -> None:
-    if request.method not in UNSAFE_METHODS:
-        return
-    validate_basic_auth(credentials=credentials)
-
-
-def validate_basic_auth(
-    credentials: HTTPBasicCredentials | None,
-) -> None:
-    log.info("user credentials: %s", credentials)
-    if credentials and redis_users.validate_user_password(
-        username=credentials.username,
-        password=credentials.password,
-    ):
-        log.info("user is authenticated: %s", credentials.username)
-        return
-
-    raise HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Invalid username or password",
-        headers={"WWW-Authenticate": "Basic"},
     )
 
 
