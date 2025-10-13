@@ -1,17 +1,20 @@
-from collections.abc import Mapping
-from typing import Any
-
 from fastapi import APIRouter, Request, status
-from pydantic import BaseModel, ValidationError
+from pydantic import ValidationError
 from starlette.responses import HTMLResponse, RedirectResponse
 
 from dependencies.films import GetFilmStorage
 from schemas.film import FilmCreate
+from services.films import FormResponseHelper
 from storage.films.exceptions import FilmAlreadyExistsError
-from templating import templates
 
 router = APIRouter(
     prefix="/create",
+)
+
+
+form_response = FormResponseHelper(
+    model=FilmCreate,
+    template_name="films/create.html",
 )
 
 
@@ -20,38 +23,7 @@ router = APIRouter(
     name="films:create_view",
 )
 def get_page_create_film(request: Request) -> HTMLResponse:
-    context: dict[str, Any] = {}
-    model_schema = FilmCreate.model_json_schema()
-    context.update(
-        model_schema=model_schema,
-    )
-    return templates.TemplateResponse(
-        request=request,
-        name="films/create.html",
-        context=context,
-    )
-
-
-def create_view_validation_response(
-    request: Request,
-    errors: dict[str, str] | None = None,
-    form_data: BaseModel | Mapping[str, Any] | None = None,
-    validated: bool = True,
-) -> HTMLResponse:
-    context: dict[str, Any] = {}
-    model_schema = FilmCreate.model_json_schema()
-    context.update(
-        model_schema=model_schema,
-        errors=errors,
-        validated=validated,
-        form_data=form_data,
-    )
-    return templates.TemplateResponse(
-        request=request,
-        name="films/create.html",
-        context=context,
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-    )
+    return form_response.render(request=request)
 
 
 @router.post(
@@ -67,13 +39,11 @@ async def create_film(
         try:
             film_create = FilmCreate.model_validate(form)
         except ValidationError as e:
-            errors: dict[str, str] = {
-                str(error["loc"][0]): error["msg"] for error in e.errors()
-            }
-            return create_view_validation_response(
-                request=request,
-                errors=errors,
+            return form_response.render(
+                request,
                 form_data=form,
+                pydantic_error=e,
+                validated=True,
             )
     try:
         storage.create_or_raise_if_exists(film_create)
@@ -86,8 +56,9 @@ async def create_film(
             url=request.url_for("films:list"),
             status_code=status.HTTP_303_SEE_OTHER,
         )
-    return create_view_validation_response(
-        request=request,
+    return form_response.render(
+        request,
         errors=errors,
         form_data=film_create,
+        validated=True,
     )
