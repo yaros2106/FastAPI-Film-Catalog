@@ -14,7 +14,7 @@
   <h1 class="title my-4">Update Film: "{{ film.title }}"</h1>
 
   {{ render_form(
-    action='',
+    action=url_for('films:update', slug=film.slug),
     button_text='Update'
     ) }}
 
