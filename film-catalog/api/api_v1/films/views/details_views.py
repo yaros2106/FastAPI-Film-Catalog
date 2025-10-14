@@ -1,13 +1,11 @@
 import logging
-from typing import Annotated
 
 from fastapi import (
     APIRouter,
-    Depends,
     status,
 )
 
-from api.api_v1.films.dependencies import prefetch_film
+from dependencies.films import FilmBySlug
 from schemas.film import (
     Film,
     FilmPartialUpdate,
@@ -33,11 +31,6 @@ router = APIRouter(
         },
     },
 )
-
-FilmBySlug = Annotated[
-    Film,
-    Depends(prefetch_film),
-]
 
 
 @router.get(

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request
 from starlette.responses import HTMLResponse
 
+from dependencies.films import FilmBySlug
 from schemas.film import FilmUpdate
 from services.films import FormResponseHelper
 
@@ -18,5 +19,13 @@ form_response = FormResponseHelper(
     "/",
     name="films:update_view",
 )
-def get_page_update_film(request: Request) -> HTMLResponse:
-    return form_response.render(request=request)
+async def get_page_update_film(
+    request: Request,
+    film: FilmBySlug,
+) -> HTMLResponse:
+    film_update = FilmUpdate(**film.model_dump())
+    return form_response.render(
+        request=request,
+        form_data=film_update,
+        film=film,
+    )
