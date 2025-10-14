@@ -1,0 +1,23 @@
+{% from 'films/macro/form.html' import render_form with context %}
+{% extends 'base.html' %}
+
+{% block title %}
+  Update a Film
+{% endblock %}
+
+{% block style_link %}
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/films/create.css') }}">
+{% endblock %}
+
+{% block main %}
+
+  <h1 class="title my-4">Update a Film</h1>
+
+  {{ render_form(
+    action='',
+    button_text='Update'
+    ) }}
+
+  {% include 'films/components/back-to-list.html' %}
+
+{% endblock %}
