@@ -45,8 +45,41 @@
             <td>
               <div class="btn-group" role="group" aria-label="Films actions">
                 <a href="{{ url_for('films:update_view', slug=film.slug) }}" class="btn btn-outline-success">Edit</a>
-                <a href="#" class="btn btn-outline-danger">Delete</a>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#model-confirm-delete-{{ film.slug }}-label">
+                  Delete
+                </button>
               </div>
+
+              <div class="modal fade" id="model-confirm-delete-{{ film.slug }}-label" tabindex="-1"
+                   aria-labelledby="model-confirm-delete-{{ film.slug }}-label"
+                   aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="model-confirm-delete-{{ film.slug }}-label">Confirm deletion
+                        -
+                        <strong>{{ film.title }}</strong></h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete Film
+                      <a
+                        target="_blank"
+                        class="modal-film-link"
+                        href="{{ film.target_url }}">{{ film.title }}</a>?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </td>
           </tr>
         {% endfor %}

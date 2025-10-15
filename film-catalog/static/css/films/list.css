@@ -7,7 +7,6 @@
 
 .table-hover tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.08) !important;
-  transform: scale(1.01);
   transition: all 0.2s ease;
 }
 
@@ -47,4 +46,13 @@ td .target_url_film {
 
 .create_first_film_link {
   color: #eec89b;
+}
+
+.modal-content {
+  background-color: #403933;
+  color: #eec89b;
+}
+
+.modal-film-link {
+  color: #ffffff;
 }
