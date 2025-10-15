@@ -20,7 +20,7 @@ form_response = FormResponseHelper(
     "/",
     name="films:update_view",
 )
-async def get_page_update_film(
+def get_page_update_film(
     request: Request,
     film: FilmBySlug,
 ) -> HTMLResponse:
