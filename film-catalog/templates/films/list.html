@@ -74,7 +74,11 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-danger">Delete</button>
+                      <form
+                        method="post"
+                        action="{{ url_for("films:delete", slug=film.slug) }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                      </form>
                     </div>
                   </div>
                 </div>
