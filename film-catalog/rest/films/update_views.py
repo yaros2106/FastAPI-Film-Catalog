@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Request, status
+from pydantic import ValidationError
 from starlette.responses import HTMLResponse, RedirectResponse
 
 from dependencies.films import FilmBySlug, GetFilmStorage
@@ -42,7 +43,16 @@ async def update_film(
     film: FilmBySlug,
 ) -> RedirectResponse | HTMLResponse:
     async with request.form() as form:
-        film_update = FilmUpdate.model_validate(form)
+        try:
+            film_update = FilmUpdate.model_validate(form)
+        except ValidationError as e:
+            return form_response.render(
+                request=request,
+                form_data=form,
+                pydantic_error=e,
+                validated=True,
+                film=film,
+            )
 
     storage.update(
         film=film,
