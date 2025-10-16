@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Request, status
-from starlette.responses import RedirectResponse
+from fastapi import APIRouter, Response, status
 
 from dependencies.films import FilmBySlug, GetFilmStorage
 
@@ -8,17 +7,16 @@ router = APIRouter(
 )
 
 
-@router.post(
+@router.delete(
     "/",
     name="films:delete",
 )
 def delete_film(
-    request: Request,
     film: FilmBySlug,
     storage: GetFilmStorage,
-) -> RedirectResponse:
+) -> Response:
     storage.delete_by_slug(film.slug)
-    return RedirectResponse(
-        url=request.url_for("films:list"),
-        status_code=status.HTTP_303_SEE_OTHER,
+    return Response(
+        status_code=status.HTTP_200_OK,
+        content="",
     )

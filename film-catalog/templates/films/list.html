@@ -74,11 +74,17 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <form
-                        method="post"
-                        action="{{ url_for("films:delete", slug=film.slug) }}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                      </form>
+                      <button
+                        hx-delete="{{ url_for("films:delete", slug=film.slug) }}"
+                        hx-target="closest tr"
+                        hx-swap="outerHTML swap:0.7s"
+                        type="submit"
+                        class="btn btn-danger"
+                        data-bs-dismiss="modal"
+                      >
+                        Delete
+                      </button>
+
                     </div>
                   </div>
                 </div>
@@ -109,4 +115,10 @@
       </a>
     </h3>
   {% endif %}
+
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
+          integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
+          crossorigin="anonymous"></script>
+
+
 {% endblock %}

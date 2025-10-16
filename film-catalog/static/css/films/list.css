@@ -56,3 +56,8 @@ td .target_url_film {
 .modal-film-link {
   color: #ffffff;
 }
+
+tr.htmx-swapping td {
+  opacity: 0;
+  transition: opacity 0.7s ease-out;
+}
