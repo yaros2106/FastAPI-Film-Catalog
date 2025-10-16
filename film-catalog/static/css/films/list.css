@@ -59,5 +59,15 @@ td .target_url_film {
 
 tr.htmx-swapping td {
   opacity: 0;
-  transition: opacity 0.7s ease-out;
+  transition: opacity 1s ease-out;
+}
+
+.htmx-indicator {
+  display: none;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.htmx-request .htmx-indicator {
+  display: inline-block;
 }

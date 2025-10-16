@@ -75,14 +75,19 @@
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                       <button
-                        hx-delete="{{ url_for("films:delete", slug=film.slug) }}"
+                        hx-delete="{{ url_for('films:delete', slug=film.slug) }}"
                         hx-target="closest tr"
-                        hx-swap="outerHTML swap:0.7s"
+                        hx-swap="outerHTML swap:1s"
                         type="submit"
                         class="btn btn-danger"
-                        data-bs-dismiss="modal"
                       >
                         Delete
+                        <img
+                          src="{{ url_for('static', path='images/loading.svg') }}"
+                          alt="Loading..."
+                          class="htmx-indicator"
+                          width="20"
+                        />
                       </button>
 
                     </div>
@@ -115,6 +120,17 @@
       </a>
     </h3>
   {% endif %}
+
+  <script>
+      document.body.addEventListener('htmx:afterRequest', function (evt) {
+          if (evt.detail.elt.classList.contains('btn-danger')) {
+              const modal = bootstrap.Modal.getInstance(evt.detail.elt.closest('.modal'));
+              if (modal) {
+                  modal.hide();
+              }
+          }
+      });
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
           integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
