@@ -24,6 +24,10 @@ def inject_features(
         "Create films",
         "Real-time statistics",
         "Shared management",
+        "Search and filter films",
+        "Edit and delete existing entries",
+        "Responsive design",
+        "Fast server-side rendering with HTMX",
     ]
     return {
         "features": features,
