@@ -1,3 +1,13 @@
+.search-label {
+color: #ffffff;
+}
+
+.form-control:focus {
+  border-color: #eec89b;
+  box-shadow: none;
+}
+
+
 .rounded-table {
   border-radius: 1rem;
   overflow: hidden;
@@ -65,9 +75,10 @@ tr.htmx-swapping td {
 .htmx-indicator {
   display: none;
   margin-left: 8px;
-  vertical-align: middle;
+  vertical-align: center;
 }
 
-.htmx-request .htmx-indicator {
+.htmx-request .htmx-indicator,
+.htmx-request.htmx-indicator {
   display: inline-block;
 }

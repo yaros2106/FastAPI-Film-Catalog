@@ -12,7 +12,7 @@ from templating import templates
 class FormResponseHelper:
     def __init__(
         self,
-        model: type[BaseModel],
+        model: type[BaseModel] | None,
         template_name: str,
     ) -> None:
         self.model = model
@@ -36,7 +36,7 @@ class FormResponseHelper:
         **extra_context: Any,  # noqa: ANN401
     ) -> HTMLResponse:
         context: dict[str, Any] = {}
-        model_schema = self.model.model_json_schema()
+        model_schema = self.model.model_json_schema() if self.model else None
         if pydantic_error:
             errors = self.format_pydantic_errors(pydantic_error)
         context.update(
