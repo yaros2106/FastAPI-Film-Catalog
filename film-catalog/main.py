@@ -4,6 +4,7 @@ from fastapi import (
     FastAPI,
 )
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.sessions import SessionMiddleware
 
 from api import router as api_router
 from app_lifespan import lifespan
@@ -19,6 +20,11 @@ logging.basicConfig(
 app = FastAPI(
     title="Film Catalog",
     lifespan=lifespan,
+)
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=settings.session.secret_key,
 )
 
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")

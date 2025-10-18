@@ -1,3 +1,5 @@
 film-catalog:
   logging:
     log_level_name: INFO
+  session:
+    secret_key:

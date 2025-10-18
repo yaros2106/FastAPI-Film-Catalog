@@ -10,6 +10,11 @@
 
 {% block main %}
   <h1 class="title text-center my-4">Films</h1>
+  {% if request.session.get("message") %}
+  	<div class="alert alert-dark" role="alert">
+      {{ request.session.pop("message") }}
+    </div>
+  {% endif %}
   {% if films %}
 
     <label for="inputSearch" class="form-label search-label fs-3">
