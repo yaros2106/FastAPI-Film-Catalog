@@ -10,11 +10,12 @@
 
 {% block main %}
   <h1 class="title text-center my-4">Films</h1>
-  {% if request.session.get("message") %}
-  	<div class="alert alert-dark" role="alert">
-      {{ request.session.pop("message") }}
+  {% for msg in get_flashed_messages(request) %}
+  	<div class="alert alert-{{ msg.category }}">
+      {{ msg.message }}
     </div>
-  {% endif %}
+  {% endfor %}
+
   {% if films %}
 
     <label for="inputSearch" class="form-label search-label fs-3">

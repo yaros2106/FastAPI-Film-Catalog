@@ -3,6 +3,7 @@ from pydantic import ValidationError
 from starlette.responses import HTMLResponse, RedirectResponse
 
 from dependencies.films import GetFilmStorage
+from misc.flash_messages import flash
 from schemas.film import FilmCreate
 from services.films import FormResponseHelper
 from storage.films.exceptions import FilmAlreadyExistsError
@@ -52,8 +53,10 @@ async def create_film(
             "slug": f"film with slug {film_create.slug!r} already exists.",
         }
     else:
-        request.session["message"] = (
-            f"Last created film with slug {film_create.slug!r}."
+        flash(
+            request=request,
+            message=f"Successfully created film with slug {film_create.slug!r}.",
+            category="success",
         )
         return RedirectResponse(
             url=request.url_for("films:list"),
