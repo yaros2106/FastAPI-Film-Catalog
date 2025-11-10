@@ -1,4 +1,6 @@
-# FastAPI Film Catalog
+# 🎞️ FastAPI Film Catalog
+
+A FastAPI-based application for managing and browsing a film catalog. Designed with scalability and developer experience in mind.
 
 [![Python checks 🐍](https://img.shields.io/github/actions/workflow/status/yaros2106/FastAPI-Film-Catalog/python-checks.yaml?branch=main&style=for-the-badge&label=Python%20checks%20%F0%9F%90%8D&labelColor=161b22&logo=github)](https://github.com/yaros2106/FastAPI-Film-Catalog/actions/workflows/python-checks.yaml)
 [![Python](https://img.shields.io/badge/python-3.13+-blue?style=for-the-badge&logo=python&labelColor=161b22)](https://www.python.org/)
@@ -12,20 +14,39 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/yaros2106/FastAPI-Film-Catalog/main.svg)](https://results.pre-commit.ci/latest/github/yaros2106/FastAPI-Film-Catalog/main)
 [![Coverage](https://codecov.io/gh/yaros2106/FastAPI-Film-Catalog/branch/main/graph/badge.svg?style=for-the-badge&labelColor=2d2f36)](https://codecov.io/gh/yaros2106/FastAPI-Film-Catalog)
 
-## Develop
+---
 
-### Setup:
+## 🚀 Features
 
-Right click `film-catalog` -> Mark Directory as -> Sources Root
+- FastAPI-powered backend
+- REST API for movies
+- Async support
+- Integrated testing setup
+- Pre-commit hooks for clean code
+- Redis support (for caching or other async tasks)
 
-### Install dependencies
+---
 
-Install all packages:
+## 🧑‍💻 Getting Started
+
+### 🛠️ Setup:
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/film-catalog.git
+    cd film-catalog
+    ```
+
+2. Right click `film-catalog` -> Mark Directory as -> Sources Root
+
+### 📦 Install dependencies
+
+Use [`uv`](https://github.com/astral-sh/uv) to install packages:
 ```shell
-uv sync
+  uv sync
 ```
 
-### Configuration `.env` file
+### ⚙️ Configuration `.env` file
 
 The application requires environment variables to work.
 Copy the `.env.template` file to `.env` and specify your values:
@@ -33,60 +54,86 @@ Copy the `.env.template` file to `.env` and specify your values:
 cp .env.template .env
 ```
 
-### Configure pre-commit
+### ⚙️ Configure pre-commit
 
 Install pre-commit hook:
 ```shell
-pre-commit install
+  pre-commit install
 ```
 
-### Run
+### 🚀 Run Development Server
 
-Go to workdir:
-```shell
-cd film-catalog
+1. Go to workdir:
+    ```shell
+    cd film-catalog
+    ```
+
+2. Make sure Redis is running:
+
+    ```bash
+    docker run -d -p 6379:6379 redis
+    ```
+
+3. Start the FastAPI dev server:
+
+    ```bash
+    fastapi dev
+    ```
+
+The server will be available at `http://localhost:8000`.
+
+---
+
+### ✅ Running Tests
+
+1. Make sure that the Redis test container is running.:
+
+```bash
+  docker run -d -p 6380:6380 redis
 ```
-
-Run dev server:
-```shell
-fastapi dev
-```
-
-### Run Redis for local development
-
-Before running tests or dev server, make sure Redis is running on port `6380`.
-
-You can run Redis using Docker:
-
-```shell
-docker run -d -p 6380:6379 --name my-redis redis
-```
-
-### Set environment variables for local testing
-
-Set the required environment variables before running tests or starting the dev server:
+2. Set the required environment variables before running tests or starting the dev server:
 
 **PowerShell**:
 ```powershell
-$env:TESTING = "1"
-$env:REDIS_PORT = "6380"
+  $env:TESTING = "1"
+  $env:REDIS_PORT = "6380"
 ```
+
 
 **Bash**:
 ```bash
-export TESTING=1
-export REDIS_PORT=6380
+  export TESTING=1
+  export REDIS_PORT=6380
 ```
 
-### Run tests
+3. Run the test suite:
 
-Run all tests:
+```bash
+  python -m unittest -v
+```
+   or with coverage
+```bash
+  coverage run -m unittest
+```
+
+---
+
+
+### 🧪 Useful Snippets
+
+Generate a random secret key:
+
 ```shell
-uv run pytest
+  python -c "import secrets;print(secrets.token_urlsafe(16))"
 ```
 
+---
 
-## Snippets
-```shell
-python -c "import secrets;print(secrets.token_urlsafe(16))"
-```
+## 👨‍🔧 For Developers
+
+* Use a virtual environment (`uv`, `venv`, or `poetry`) to manage dependencies.
+* Follow PEP8 style guidelines (auto-enforced via `pre-commit`).
+* Use descriptive commit messages (consider [Conventional Commits](https://www.conventionalcommits.org/)).
+* Document public endpoints and services clearly with docstrings and OpenAPI schemas.
+
+---
